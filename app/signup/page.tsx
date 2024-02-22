@@ -19,16 +19,13 @@ export default function Login({
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
     });
 
     if (error) {
-      return redirect("/login?message=Could not authenticate user");
+      return redirect("/signup?message=" + error.message);
     }
 
-    return redirect("/login?message=Check email to continue sign in process");
+    return redirect("/login?message=Please login with your new account");
   };
 
   return (
