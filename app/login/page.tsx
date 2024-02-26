@@ -24,7 +24,7 @@ export default function Login({
       return redirect("/login?message=" + error.message);
     }
 
-    return redirect("/");
+    return redirect("/main?message=Signed in successfully");
   };
 
   return (

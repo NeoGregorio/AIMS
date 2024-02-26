@@ -25,7 +25,7 @@ export default function Login({
       return redirect("/signup?message=" + error.message);
     }
 
-    return redirect("/login?message=Please login with your new account");
+    return redirect("/main?message=Account created!");
   };
 
   return (
