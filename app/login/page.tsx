@@ -22,7 +22,7 @@ export default function Login({
 
     if (error) {
       if (error.message == "fetch failed") {
-        return redirect("/signup?message=Database connection not found.");
+        return redirect("/login?message=Database connection not found.");
       }
       return redirect("/login?message=" + error.message);
     }
