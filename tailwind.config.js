@@ -9,9 +9,14 @@ module.exports = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        purple: {
+          light: "#9790FF",
+          DEFAULT: "#6C63FF",
+          dark: "#6661BF"
+        },
         btn: {
-          background: "hsl(var(--btn-background))",
-          "background-hover": "hsl(var(--btn-background-hover))",
+          background: "#6C63FF",
+          "background-hover": "#6661BF",
         },
       },
     },
