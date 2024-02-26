@@ -26,6 +26,7 @@ export default async function Index() {
             width={50}
             height={50}
           />
+
           {isSupabaseConnected && <AuthButton />}
         </div>
       </nav>

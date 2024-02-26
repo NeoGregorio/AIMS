@@ -22,6 +22,9 @@ export default function Login({
     });
 
     if (error) {
+      if (error.message == "fetch failed") {
+        return redirect("/signup?message=Database connection not found.");
+      }
       return redirect("/signup?message=" + error.message);
     }
 
@@ -86,7 +89,7 @@ export default function Login({
           </Link>
         </p>
         {searchParams?.message && (
-          <p className="bg-foreground/10 text-foreground mt-4 p-4 text-center">
+          <p className="text-foreground mt-4 bg-red-100 p-4 text-center">
             {searchParams.message}
           </p>
         )}
