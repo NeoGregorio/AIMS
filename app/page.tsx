@@ -48,7 +48,7 @@ export default async function Index() {
         </div>
       </div>
       <footer className="bg-gray min-h-24 w-full flex-row items-center justify-center gap-0 sm:gap-20 border-t flex">
-        <div className="flex flex-col sm:flex-row gap-4 p-6 sm:gap-8">
+        <div className="flex flex-col sm:flex-row gap-4 p-6 pr-0 sm:gap-8">
           <span className="text-[23px] border-purple border-l-[6px] pl-4">
             Contact us!
           </span>
@@ -58,7 +58,7 @@ export default async function Index() {
             ))}
           </div>
         </div>
-        <div className="text-graysubtitle flex gap-2 text-xs leading-3 py-5 items-center p-6">
+        <div className="text-graysubtitle flex gap-2 text-xs leading-3 py-5 items-center p-6 pl-0">
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
