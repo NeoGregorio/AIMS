@@ -25,7 +25,19 @@ export default async function Index() {
     <>
     <NavBar hasLogin={true}/>
     <div className="flex w-full flex-1 flex-col items-center gap-20">
-      <div className="flex px-60 gap-10">
+      <nav className="border-b-foreground/10 flex h-[90px] w-full justify-center border-b">
+        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
+          <Image
+            src="/static/images/logo.png"
+            alt="Logo"
+            width={50}
+            height={50}
+          />
+
+          {isSupabaseConnected && <AuthButton />}
+        </div>
+      </nav>
+      <div>
         <Image
           src="/img/illus-landing-page.svg"
           alt="Woman carrying a box"
