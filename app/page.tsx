@@ -39,7 +39,7 @@ export default async function Index() {
     <>
       <NavBar hasLogin={true} />
       <div className="flex w-full flex-1 flex-row items-center justify-center">
-        <div className="flex w-1/3 flex-row justify-end">
+        <div className="flex w-[40%] flex-row justify-end">
           <Image
             src="/img/illus-landing-page.svg"
             alt="Woman carrying a box"
@@ -47,12 +47,14 @@ export default async function Index() {
             height={500}
           />
         </div>
-        <div className="flex w-2/3 flex-col items-center justify-start pr-16">
-          <h1>Streamline your business operations with AIMS.</h1>
-          <h3>
-            Keep track of products, know when to restock, know when to order
-            more, and know when products will expire.
-          </h3>
+        <div className="flex w-[60%] flex-row justify-start">
+          <div className="flex w-[70%] flex-col justify-start">
+            <h1>Streamline your business operations with AIMS.</h1>
+            <h3>
+              Keep track of products, know when to restock, know when to order
+              more, and know when products will expire.
+            </h3>
+          </div>
         </div>
       </div>
       <footer className="mt-auto flex h-28 w-full items-center justify-evenly gap-5 border-t">
