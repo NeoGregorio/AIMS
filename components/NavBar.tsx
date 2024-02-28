@@ -29,8 +29,11 @@ export default async function NavBar({
           <div className="flex gap-1">
             <Image src="/img/logo.svg" alt="Logo" width={70} height={70} />
             {hasFullName && (
-              <div className="flex flex-col justify-center w-[200px] leading-4 text-[18px]">
-                <p>Automated Inventory Management System</p>
+              <div className="flex w-[200px] flex-col justify-center text-[18px] leading-4">
+                <p className="hidden sm:flex">
+                  Automated Inventory Management System
+                </p>
+                <p className="flex sm:hidden">AIMS</p>
               </div>
             )}
           </div>
