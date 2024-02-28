@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -6,9 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'sans': ['"Inter"', 'sans-serif']
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        gray: "#EEF2ED",
         purple: {
           light: "#9790FF",
           DEFAULT: "#6C63FF",

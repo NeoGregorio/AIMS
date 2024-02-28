@@ -2,6 +2,8 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import Image from "next/image";
+import NavBar from "../../components/NavBar";
 
 export default function Login({
   searchParams,

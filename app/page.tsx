@@ -1,48 +1,57 @@
-import AuthButton from "../components/AuthButton";
-import { createClient } from "@/utils/supabase/server";
 import Image from "next/image";
+import NavBar from "../components/NavBar";
+
+type PersonProps = {
+  name: string;
+  email: string;
+};
+
+const Person = ({ name, email }: PersonProps) => (
+  <div>
+    <span className="text-lg">{name}</span>
+    <br></br>
+    <span className="text-[100]">{email}</span>
+  </div>
+);
+
+const people = [
+  { name: 'Gregorio, Herminio IV', email: 'hlgregorio@up.edu.ph' },
+  { name: 'Libiran, Kyle David', email: 'kglibiran@up.edu.ph' },
+  { name: 'Manguan, Ayen Unice', email: 'ammanguan@up.edu.ph' },
+];
 
 export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const isSupabaseConnected = canInitSupabaseClient();
-
   return (
+    <>
+    <NavBar hasLogin={true}/>
     <div className="flex w-full flex-1 flex-col items-center gap-20">
-      <nav className="border-b-foreground/10 flex h-16 w-full justify-center border-b p-20">
-        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
-          <div className="flex">
-            <Image src="/img/logo.svg" alt="Logo" width={70} height={70} />
-            <div className="flex flex-col leading-2 justify-center">
-              <span>Automated Inventory</span>
-              <span>Management System</span>
-            </div>
-          </div>
-          {isSupabaseConnected && <AuthButton />}
-        </div>
-      </nav>
-      <div>
+      <div className="flex px-60 gap-10">
         <Image
           src="/img/illus-landing-page.svg"
           alt="Woman carrying a box"
-          width={400}
-          height={600}
+          width={300}
+          height={500}
         />
-        <h1>Streamline your business operations with AIMS.</h1>
-        <h2>
-          Keep track of products, know when to restock, know when to order more,
-          and know when products will expire.
-        </h2>
+        <div className="flex flex-col justify-center items-center">
+          <h1>Streamline your business operations with AIMS.</h1>
+          <h3>
+            Keep track of products, know when to restock, know when to order more,
+            and know when products will expire.
+          </h3>
+        </div>
       </div>
+      <footer className="w-full h-28 flex justify-evenly items-center border-t mt-auto gap-5">
+        <span>Contact us!</span>
+        <div className="flex gap-10">
+          {people.map((person, index) => (
+            <Person key={index} name={person.name} email={person.email} />
+          ))}
+        </div>
+        <div className="w-[200px]">
+          <span>This is a web app developed for CS 192.</span>
+        </div>
+      </footer>
     </div>
+    </>
   );
 }
