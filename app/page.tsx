@@ -1,7 +1,5 @@
 import Image from "next/image";
 import NavBar from "../components/NavBar";
-import { createClient } from "@/utils/supabase/client";
-import AuthButton from "@/components/AuthButton";
 
 type PersonProps = {
   name: string;
@@ -23,18 +21,6 @@ const people = [
 ];
 
 export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const isSupabaseConnected = canInitSupabaseClient();
   return (
     <>
       <NavBar hasLogin={true} />
