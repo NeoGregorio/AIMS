@@ -12,19 +12,33 @@ function getRandomLetter(): string {
 
 ////////// Test for Successful Redirection to Sign Up Page (No account yet) //////////
 test("1. Successful Redirection to Sign Up Page", async ({ page }) => {
-  await page.goto("https://aims-omega.vercel.app/login"); // Go to login page
-  await page.click("text=Sign Up"); // Click the Sign Up button
-  await page.waitForNavigation(); // Wait for the page to navigate
-  const currentUrl = page.url(); // Get the current URL
-  expect(currentUrl).toBe("https://aims-omega.vercel.app/signup"); // Use expect to check the URL
+  await page.goto("https://aims-omega.vercel.app/login");           // Go to login page
+  await page.click("text=Sign Up");                                 // Click the Sign Up button
+  await page.waitForNavigation();                                   // Wait for the page to navigate
+  const currentUrl = page.url();                                    // Get the current URL
+  expect(currentUrl).toBe("https://aims-omega.vercel.app/signup");  // Use expect to check the URL
 });
 
 ////////// Successful Sign In //////////
 
-test("2. Successful Login", async ({ page }) => {
+test("2a. Successful Login", async ({ page }) => {
   // Valid Email and Password Should Sign In Successfully
   await page.goto("https://aims-omega.vercel.app/login");
-  await page.fill('input[name="email"]', "hlgregorio@up.edu.ph");
+  await page.fill('input[name="email"]', "hlgregorio@Up.edu.ph");
+  await page.fill('input[name="password"]', "AIMS123");
+  await page.click("text=Sign In");
+  await page.waitForNavigation();
+  const currentUrl = page.url();
+
+  expect(currentUrl).toBe(
+    `https://aims-omega.vercel.app/main?message=Signed${space}in${space}successfully`
+  );
+});
+
+test("2b. Successful Login", async ({ page }) => {
+  // Valid Email and Password Should Sign In Successfully
+  await page.goto("https://aims-omega.vercel.app/login");
+  await page.fill('input[name="email"]', "sample@example.com");
   await page.fill('input[name="password"]', "AIMS123");
   await page.click("text=Sign In");
   await page.waitForNavigation();
@@ -37,7 +51,7 @@ test("2. Successful Login", async ({ page }) => {
 
 ////////// Unsuccessful Sign In //////////
 
-test("3a. Wrong Password", async ({ page }) => {
+test("3. Wrong Password", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "hlgregorio@up.edu.ph");
   await page.fill('input[name="password"]', "WrongPassword");
@@ -50,7 +64,7 @@ test("3a. Wrong Password", async ({ page }) => {
   );
 });
 
-test("3b. Non-Existing Email", async ({ page }) => {
+test("4. Non-Existing Email", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "NoneExistingEmail@up.edu.ph");
   await page.fill('input[name="password"]', "AIMS123");
@@ -94,7 +108,7 @@ test("5. Existing User Signs Up", async ({ page }) => {
 });
 
 ////////// Unsuccessful Sign Up //////////
-test("6. Invalid Email Format", async ({ page }) => {
+test("6a. Invalid Email Format", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/signup");
   await page.fill('input[name="email"]', "InvalidEmail");
   await page.fill('input[name="password"]', "AIMS123");
@@ -107,7 +121,20 @@ test("6. Invalid Email Format", async ({ page }) => {
   );
 });
 
-test("7. Invalid Password Format", async ({ page }) => {
+test("6b. Invalid Email Format", async ({ page }) => {
+  await page.goto("https://aims-omega.vercel.app/signup");
+  await page.fill('input[name="email"]', "wala");
+  await page.fill('input[name="password"]', "123456");
+  await page.click("text=Sign Up");
+  await page.waitForNavigation();
+  const currentUrl = page.url();
+
+  expect(currentUrl).toBe(
+    `https://aims-omega.vercel.app/signup?message=Unable${space}to${space}validate${space}email${space}address:${space}invalid${space}format`
+  );
+});
+
+test("7a. Invalid Password Format", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/signup");
   await page.fill('input[name="email"]', "sample@example.com");
   await page.fill('input[name="password"]', "5char");
@@ -119,3 +146,17 @@ test("7. Invalid Password Format", async ({ page }) => {
     `https://aims-omega.vercel.app/signup?message=Password${space}should${space}be${space}at${space}least${space}6${space}characters.`
   );
 });
+
+test("7b. Invalid Password Format", async ({ page }) => {
+  await page.goto("https://aims-omega.vercel.app/signup");
+  await page.fill('input[name="email"]', "sample@example.com");
+  await page.fill('input[name="password"]', " ");
+  await page.click("text=Sign Up");
+  await page.waitForNavigation();
+  const currentUrl = page.url();
+
+  expect(currentUrl).toBe(
+    `https://aims-omega.vercel.app/signup?message=Password${space}should${space}be${space}at${space}least${space}6${space}characters.`
+  );
+});
+
