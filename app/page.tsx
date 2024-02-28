@@ -23,7 +23,7 @@ export default async function Index() {
   return (
     <>
       <NavBar hasLogin={true} hasFullName={true} />
-      <div className="flex w-full flex-1 flex-col  flex-wrap items-center justify-center gap-6 sm:gap-0 sm:flex-row">
+      <div className="flex w-full flex-1 flex-col flex-wrap items-center justify-center gap-6 sm:gap-0 sm:flex-row py-10">
         <div className="flex w-full sm:w-1/4 flex-row justify-center">
           <Image
             src="/img/illus-landing-page.svg"
