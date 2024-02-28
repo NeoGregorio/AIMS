@@ -21,10 +21,13 @@ export default function Login({
     });
 
     if (error) {
-      return redirect("/login?message=Could not authenticate user");
+      if (error.message == "fetch failed") {
+        return redirect("/login?message=Database connection not found.");
+      }
+      return redirect("/login?message=" + error.message);
     }
 
-    return redirect("/");
+    return redirect("/main?message=Signed in successfully");
   };
 
   return (
@@ -84,7 +87,7 @@ export default function Login({
           </Link>
         </p>
         {searchParams?.message && (
-          <p className="bg-foreground/10 text-foreground mt-4 p-4 text-center">
+          <p className="text-foreground mt-4 bg-red-100 p-4 text-center">
             {searchParams.message}
           </p>
         )}

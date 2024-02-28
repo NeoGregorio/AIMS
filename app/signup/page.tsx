@@ -19,16 +19,16 @@ export default function Login({
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
     });
 
     if (error) {
-      return redirect("/login?message=Could not authenticate user");
+      if (error.message == "fetch failed") {
+        return redirect("/signup?message=Database connection not found.");
+      }
+      return redirect("/signup?message=" + error.message);
     }
 
-    return redirect("/login?message=Check email to continue sign in process");
+    return redirect("/main?message=Account created!");
   };
 
   return (
@@ -89,7 +89,7 @@ export default function Login({
           </Link>
         </p>
         {searchParams?.message && (
-          <p className="bg-foreground/10 text-foreground mt-4 p-4 text-center">
+          <p className="text-foreground mt-4 bg-red-100 p-4 text-center">
             {searchParams.message}
           </p>
         )}
