@@ -25,7 +25,10 @@ export default async function AuthButton() {
       </form>
     </div>
   ) : (
-    <Link href="/login" className="btn-generic break-keep text-xs sm:text-sm">
+    <Link
+      href="/login"
+      className="btn-generic whitespace-nowrap text-xs sm:text-sm"
+    >
       Log In
     </Link>
   );
