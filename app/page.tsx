@@ -32,24 +32,17 @@ export default async function Index() {
             objectFit="contain"
           />
         </div>
-        <div className="flex flex-col justify-start max-w-[650px] leading-[3rem] gap-5">
-          <h1>
-            Streamline your business operations with
-            <span className="font-bold text-purple"> AIMS</span>.
-          </h1>
-          <div className="w-2/3">
-            <h3>
-              Keep track of products, know when to restock, know when to order
-              more, and know when products will expire.
-            </h3>
-          </div>
+        <div className="flex w-2/3 flex-col items-center justify-start pr-16">
+          <h1>Streamline your business operations with AIMS.</h1>
+          <h3>
+            Keep track of products, know when to restock, know when to order
+            more, and know when products will expire.
+          </h3>
         </div>
       </div>
-      <footer className="bg-gray mt-auto flex flex-row min-h-24 w-full items-center justify-center gap-20 border-t">
-        <span className="text-[23px] border-l-[6px] border-purple leading-6 pl-4">
-          Contact us!
-        </span>
-        <div className="flex gap-9 flex-wrap">
+      <footer className="mt-auto flex h-28 w-full items-center justify-evenly gap-5 border-t">
+        <span>Contact us!</span>
+        <div className="flex gap-10">
           {people.map((person, index) => (
             <Person key={index} name={person.name} email={person.email} />
           ))}
