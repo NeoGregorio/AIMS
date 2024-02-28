@@ -15,3 +15,15 @@ h2 {
 h3 {
     @apply text-base;
 }
+
+.btn-generic {
+    @apply shadow-lg leading-4 text-center py-4 px-10 flex rounded-full no-underline font-semibold bg-btn-background text-white hover:bg-btn-background-hover transition-colors duration-200
+}
+
+.error-message {
+    @apply leading-3 rounded-lg text-foreground mt-10 bg-red-600 bg-opacity-10 text-red-500 font-medium p-4 text-center
+}
+
+.redirect-login-signup {
+    @apply text-purple underline underline-offset-4
+}

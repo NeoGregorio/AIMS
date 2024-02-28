@@ -21,16 +21,11 @@ export default async function AuthButton() {
     <div className="flex items-center gap-4">
       Hey, {user.email}!
       <form action={signOut}>
-        <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">
-          Logout
-        </button>
+        <button className="btn-generic">Logout</button>
       </form>
     </div>
   ) : (
-    <Link
-      href="/login"
-      className="py-4 px-10 flex rounded-full no-underline font-semibold bg-btn-background text-white hover:bg-btn-background-hover transition-colors duration-200"
-    >
+    <Link href="/login" className="btn-generic">
       Log In
     </Link>
   );
