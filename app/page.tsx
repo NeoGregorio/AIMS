@@ -38,7 +38,7 @@ export default async function Index() {
   return (
     <>
       <NavBar hasLogin={true} />
-      <div className="flex w-full flex-1 flex-row items-center justify-center gap-20">
+      <div className="flex w-full flex-1 flex-row items-center justify-center">
         <div className="flex w-1/3 flex-row justify-end">
           <Image
             src="/img/illus-landing-page.svg"
