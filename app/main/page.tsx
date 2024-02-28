@@ -1,6 +1,7 @@
 import Image from "next/image";
 import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/client";
+import NavBar from "@/components/NavBar";
 
 export default function Main({
   searchParams,
@@ -22,17 +23,7 @@ export default function Main({
 
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-20">
-      <nav className="border-b-foreground/10 flex h-[90px] w-full justify-center border-b">
-        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
-          <Image
-            src="/static/images/logo.png"
-            alt="Logo"
-            width={50}
-            height={50}
-          />
-          {isSupabaseConnected && <AuthButton />}
-        </div>
-      </nav>
+      <NavBar hasLogin={true} hasFullName={false} />
       {searchParams?.message && (
         <p className="bg-foreground/10 text-foreground mt-4 p-4 text-center">
           {searchParams.message}

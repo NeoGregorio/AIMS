@@ -34,68 +34,65 @@ export default function Login({
   };
 
   return (
-    <div className="flex w-full flex-1 flex-col justify-center gap-2 px-8 sm:max-w-md">
-      <Link
-        href="/"
-        className="text-foreground bg-btn-background hover:bg-btn-background-hover group absolute left-8 top-8 flex items-center rounded-md px-4 py-2 text-sm no-underline"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
+    <div className="relative w-full h-screen">
+      <NavBar hasLogin={false} hasFullName={true} />
+      <div className="w-[400px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center gap-2 px-8 sm:max-w-md">
+        <form
+          className="animate-in text-foreground flex w-full flex-1 flex-col justify-center"
+          action={signUp}
         >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{" "}
-        Back
-      </Link>
-
-      <form
-        className="animate-in text-foreground flex w-full flex-1 flex-col justify-center gap-2"
-        action={signUp}
-      >
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="mb-6 rounded-md border bg-inherit px-4 py-2"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-        <button className="text-foreground mb-2 rounded-md bg-white px-4 py-2 text-black">
-          Sign Up
-        </button>
-        <p className="text-center">
-          {" "}
-          Already have an account?
-          <Link href="/login" className="text-blue-500">
-            {" "}
-            Sign In
+          <Link
+            href="/"
+            className="text-foreground group flex items-center rounded-md px-4 py-2 text-sm no-underline"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>{" "}
+            Back
           </Link>
-        </p>
-        {searchParams?.message && (
-          <p className="text-foreground mt-4 bg-red-100 p-4 text-center">
-            {searchParams.message}
+          <div className="flex flex-col items-center gap-2 my-14">
+            <Image src="/img/logo.svg" alt="Logo" width={130} height={130} />
+            <h2>Welcome to AIMS!</h2>
+          </div>
+          <input
+            className="mb-2 rounded-lg px-4 py-3 bg-gray"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <input
+            className="mb-2 rounded-lg px-4 py-3 bg-gray"
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <button className="btn-generic mt-8 mb-3 py-2 px-4 flex items-center justify-center text-center">
+            Sign Up
+          </button>
+          <p className="text-center">
+            {" "}
+            Already have an account?{" "}
+            <Link href="/login" className="redirect-login-signup">
+              Log in now!
+            </Link>
           </p>
-        )}
-      </form>
+          {searchParams?.message && (
+            <p className="error-message">{searchParams.message}</p>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

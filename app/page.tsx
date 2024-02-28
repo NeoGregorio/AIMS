@@ -22,7 +22,7 @@ const people = [
 export default async function Index() {
   return (
     <>
-      <NavBar hasLogin={true} />
+      <NavBar hasLogin={true} hasFullName={true} />
       <div className="flex w-full flex-1 flex-row items-center justify-center flex-wrap">
         <div className="relative w-1/4 h-[500px]">
           <Image

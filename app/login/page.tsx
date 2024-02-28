@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import NavBar from "../../components/NavBar";
+import NavBar from "@/components/NavBar";
 
 export default function Login({
   searchParams,
@@ -33,7 +33,7 @@ export default function Login({
 
   return (
     <div className="relative w-full h-screen">
-      <NavBar hasLogin={false} />
+      <NavBar hasLogin={false} hasFullName={true} />
       <div className="w-[400px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center gap-2 px-8 sm:max-w-md">
         <form
           className="animate-in text-foreground flex w-full flex-1 flex-col justify-center"
