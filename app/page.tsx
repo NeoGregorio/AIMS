@@ -1,5 +1,7 @@
 import Image from "next/image";
 import NavBar from "../components/NavBar";
+import { createClient } from "@/utils/supabase/client";
+import AuthButton from "@/components/AuthButton";
 
 type PersonProps = {
   name: string;
@@ -15,44 +17,45 @@ const Person = ({ name, email }: PersonProps) => (
 );
 
 const people = [
-  { name: 'Gregorio, Herminio IV', email: 'hlgregorio@up.edu.ph' },
-  { name: 'Libiran, Kyle David', email: 'kglibiran@up.edu.ph' },
-  { name: 'Manguan, Ayen Unice', email: 'ammanguan@up.edu.ph' },
+  { name: "Gregorio, Herminio IV", email: "hlgregorio@up.edu.ph" },
+  { name: "Libiran, Kyle David", email: "kglibiran@up.edu.ph" },
+  { name: "Manguan, Ayen Unice", email: "ammanguan@up.edu.ph" },
 ];
 
 export default async function Index() {
+  const canInitSupabaseClient = () => {
+    // This function is just for the interactive tutorial.
+    // Feel free to remove it once you have Supabase connected.
+    try {
+      createClient();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const isSupabaseConnected = canInitSupabaseClient();
   return (
     <>
-    <NavBar hasLogin={true}/>
-    <div className="flex w-full flex-1 flex-col items-center gap-20">
-      <nav className="border-b-foreground/10 flex h-[90px] w-full justify-center border-b">
-        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
+      <NavBar hasLogin={true} />
+      <div className="flex w-full flex-1 flex-row items-center justify-center gap-20">
+        <div className="flex w-1/3 flex-row justify-end">
           <Image
-            src="/static/images/logo.png"
-            alt="Logo"
-            width={50}
-            height={50}
+            src="/img/illus-landing-page.svg"
+            alt="Woman carrying a box"
+            width={300}
+            height={500}
           />
-
-          {isSupabaseConnected && <AuthButton />}
         </div>
-      </nav>
-      <div>
-        <Image
-          src="/img/illus-landing-page.svg"
-          alt="Woman carrying a box"
-          width={300}
-          height={500}
-        />
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex w-2/3 flex-col items-center justify-start pr-16">
           <h1>Streamline your business operations with AIMS.</h1>
           <h3>
-            Keep track of products, know when to restock, know when to order more,
-            and know when products will expire.
+            Keep track of products, know when to restock, know when to order
+            more, and know when products will expire.
           </h3>
         </div>
       </div>
-      <footer className="w-full h-28 flex justify-evenly items-center border-t mt-auto gap-5">
+      <footer className="mt-auto flex h-28 w-full items-center justify-evenly gap-5 border-t">
         <span>Contact us!</span>
         <div className="flex gap-10">
           {people.map((person, index) => (
@@ -63,7 +66,6 @@ export default async function Index() {
           <span>This is a web app developed for CS 192.</span>
         </div>
       </footer>
-    </div>
     </>
   );
 }

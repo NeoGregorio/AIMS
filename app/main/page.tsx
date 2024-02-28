@@ -19,6 +19,7 @@ export default function Main({
   };
 
   const isSupabaseConnected = canInitSupabaseClient();
+
   return (
     <div className="flex w-full flex-1 flex-col items-center gap-20">
       <nav className="border-b-foreground/10 flex h-[90px] w-full justify-center border-b">
