@@ -3,7 +3,8 @@ import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import NavBar from "../../components/NavBar";
+import NavBar from "@/components/NavBar";
+import { SubmitButton } from "@/components/SubmitButton";
 
 export default function Login({
   searchParams,
@@ -35,12 +36,14 @@ export default function Login({
 
   return (
     <div className="relative w-full h-screen">
-      <NavBar hasLogin={false} hasFullName={true} hasLinks={false} currentActive={""}/>
+      <NavBar
+        hasLogin={false}
+        hasFullName={true}
+        hasLinks={false}
+        currentActive={""}
+      />
       <div className="w-[400px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center gap-2 px-8 sm:max-w-md">
-        <form
-          className="animate-in text-foreground flex w-full flex-1 flex-col justify-center"
-          action={signUp}
-        >
+        <form className="animate-in text-foreground flex w-full flex-1 flex-col justify-center">
           <Link
             href="/"
             className="text-foreground group flex items-center rounded-md px-4 py-2 text-sm no-underline"
@@ -78,9 +81,13 @@ export default function Login({
             placeholder="Password"
             required
           />
-          <button className="btn-generic mt-8 mb-3 py-2 px-4 flex items-center justify-center text-center">
+          <SubmitButton
+            formAction={signUp}
+            className="btn-generic mt-8 mb-3 py-2 px-4 flex items-center justify-center text-center"
+            pendingText="Signing up..."
+          >
             Sign Up
-          </button>
+          </SubmitButton>
           <p className="text-center">
             {" "}
             Already have an account?{" "}
