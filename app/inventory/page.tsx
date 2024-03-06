@@ -6,6 +6,14 @@ import { redirect } from "next/navigation";
 import { AddItem } from "@/components/AddItem";
 import SearchBar from "@/components/SearchBar";
 
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 async function GetItems() {
   const supabase = createClient();
 
@@ -46,7 +54,7 @@ export default async function Main({
 
   if (user) {
     return (
-      <div className="flex w-full flex-1 flex-col items-center gap-20">
+      <div className="flex w-full flex-1 flex-col items-center gap-10 mb-10">
         <NavBar
           hasLogin={true}
           hasFullName={false}
@@ -92,30 +100,18 @@ export default async function Main({
           <AddItem />
         </div>
         <div className="flex items-center justify-center">
-          <table className="divide-y divide-gray-200 border border-gray-200">
-            <thead className="bg-gray-50">
-              <tr className="flex justify-between">
-                <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
-                  Quantity
-                </th>
-                <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
-                  Sales
-                </th>
-                <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
-                  Expiry Date
-                </th>
-                <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
-                  Price
-                </th>
-                <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
-                  Category
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Quantity</TableHead>
+                <TableHead>Sales</TableHead>
+                <TableHead>Expiry Date</TableHead>
+                <TableHead>Price</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="bg-white">
               {data?.map((item) => (
                 <ItemsTable
                   key={item.id}
@@ -123,8 +119,8 @@ export default async function Main({
                   {...item}
                 />
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </div>
     );
