@@ -5,12 +5,12 @@ import Link from "next/link";
 
 export default function SearchBar() {
   return (
-    <div className="flex w-full items-center bg-gray rounded-md px-4 py-4">
+    <div className="bg-gray flex w-full items-center rounded-md px-4 py-4">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        className="w-5 h-5 mr-2 text-black-500/50"
+        className="text-black-500/50 mr-2 h-5 w-5"
       >
         <path
           fillRule="evenodd"
@@ -21,7 +21,7 @@ export default function SearchBar() {
       <input
         type="text"
         placeholder="Quickly find your product!"
-        className="flex-grow bg-transparent text-sm text-black-600/50 outline-none"
+        className="text-black-600/50 flex-grow bg-transparent text-sm outline-none"
       />
     </div>
   );

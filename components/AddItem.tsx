@@ -1,3 +1,7 @@
+"use client";
+import { useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+
 import {
   Dialog,
   DialogContent,
@@ -13,14 +17,42 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
 export function AddItem() {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+
+  const handleAdd = async (event: any) => {
+    event.preventDefault();
+    const supabase = createClient();
+    // Get current user
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    try {
+      const { data: items, error } = await supabase.from("items").insert([
+        {
+          name,
+          category,
+          quantity: 0,
+          sales: 0,
+          price,
+          user_id: user?.id,
+        },
+      ]);
+      window.location.reload();
+      if (error) throw error;
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
   return (
     <Dialog>
-      <DialogTrigger className="text-sm flex flex-row gap-2 items-center ease-in-out duration-200 shadow-lg leading-4 text-center py-4 px-6 flex rounded-full no-underline font-semibold bg-btn-background text-white hover:bg-btn-background-hover transition-colors duration-200">
+      <DialogTrigger className="bg-btn-background hover:bg-btn-background-hover flex flex flex-row items-center gap-2 rounded-full px-6 py-4 text-center text-sm font-semibold leading-4 text-white no-underline shadow-lg transition-colors duration-200 duration-200 ease-in-out">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="w-4 h-4"
+          className="h-4 w-4"
         >
           <path
             fillRule="evenodd"
@@ -37,28 +69,42 @@ export function AddItem() {
             Add item details here; click save when you're done!
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-2 py-4">
-          <div className="grid grid-cols-4 items-center gap-5">
-            <Label htmlFor="name" className="text-right">
-              Item Name
-            </Label>
-            <Input id="name" value="" className="col-span-3" />
+        <form>
+          <div className="grid gap-2 py-4">
+            <div className="grid grid-cols-4 items-center gap-5">
+              <Label htmlFor="name" className="text-right">
+                Item Name
+              </Label>
+              <Input
+                id="name"
+                className="col-span-3"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-5">
+              <Label htmlFor="price" className="text-right">
+                Category
+              </Label>
+              <Input
+                id="category"
+                className="col-span-3"
+                onChange={(e) => setCategory(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-5">
+              <Label htmlFor="price" className="text-right">
+                Price
+              </Label>
+              <Input
+                id="price"
+                className="col-span-3"
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-5">
-            <Label htmlFor="price" className="text-right">
-              Category
-            </Label>
-            <Input id="category" value="" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-5">
-            <Label htmlFor="price" className="text-right">
-              Price
-            </Label>
-            <Input id="price" value="" className="col-span-3" />
-          </div>
-        </div>
+        </form>
         <DialogFooter>
-          <Button type="submit" className="btn-generic">
+          <Button type="submit" onClick={handleAdd} className="btn-generic">
             Save
           </Button>
         </DialogFooter>
