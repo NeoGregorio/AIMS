@@ -7,7 +7,7 @@ export default async function NavBar({
   hasLogin,
   hasFullName,
   hasLinks,
-  currentActive
+  currentActive,
 }: {
   hasLogin: boolean;
   hasFullName: boolean;
@@ -27,12 +27,13 @@ export default async function NavBar({
 
   const isSupabaseConnected = canInitSupabaseClient();
   const isActive = (page: string) => {
-    return page === currentActive ? "underline underline-offset-4" : "text-black";
-  }
-  
+    return page === currentActive
+      ? "underline underline-offset-4"
+      : "text-black";
+  };
 
   return (
-    <nav className="border-b-foreground/10 bg-gray flex h-24 w-full flex-col justify-center border-b">
+    <nav className="border-b-foreground/10 bg-gray flex h-24 w-full flex-col justify-center border-b border-black-500/100">
       <div className="flex flex-row justify-center">
         <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
           <div className="flex gap-1">
@@ -47,17 +48,17 @@ export default async function NavBar({
                 <p className="flex sm:hidden">AIMS</p>
               </div>
             )}
-              {hasLinks && <ul className="flex gap-4 flex-row justify-center items-center pl-5 text-lg">
+            {hasLinks && (
+              <ul className="flex gap-4 flex-row justify-center items-center pl-5 text-lg">
                 <li className={isActive("home")}>
                   <Link href="/main">Home</Link>
                 </li>
                 <li className={isActive("inventory")}>
-                  <Link href="/inventory">
-                    Inventory
-                  </Link>
+                  <Link href="/inventory">Inventory</Link>
                 </li>
-              </ul>}
-            </div>
+              </ul>
+            )}
+          </div>
           {hasLogin && isSupabaseConnected && <AuthButton />}
         </div>
       </div>

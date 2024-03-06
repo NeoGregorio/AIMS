@@ -39,9 +39,9 @@ export default function Main({
               className="w-5 h-5"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M3 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 5.25Zm0 4.5A.75.75 0 0 1 3.75 9h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 9.75Zm0 4.5a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Zm0 4.5a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
             <span>Stocks</span>
@@ -54,9 +54,9 @@ export default function Main({
               className="w-5 h-5"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M3 6a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3v2.25a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3V6ZM3 15.75a3 3 0 0 1 3-3h2.25a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-2.25Zm9.75 0a3 3 0 0 1 3-3H18a3 3 0 0 1 3 3V18a3 3 0 0 1-3 3h-2.25a3 3 0 0 1-3-3v-2.25Z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
             <span>Category</span>
@@ -70,9 +70,9 @@ export default function Main({
             className="w-4 h-4"
           >
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-              clip-rule="evenodd"
+              clipRule="evenodd"
             />
           </svg>
           <span>Add new item</span>
