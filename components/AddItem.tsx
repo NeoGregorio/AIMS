@@ -37,20 +37,20 @@ export function AddItem() {
             Add item details here; click save when you're done!
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+        <div className="grid gap-2 py-4">
+          <div className="grid grid-cols-4 items-center gap-5">
             <Label htmlFor="name" className="text-right">
               Item Name
             </Label>
             <Input id="name" value="" className="col-span-3" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid grid-cols-4 items-center gap-5">
             <Label htmlFor="price" className="text-right">
               Category
             </Label>
             <Input id="category" value="" className="col-span-3" />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid grid-cols-4 items-center gap-5">
             <Label htmlFor="price" className="text-right">
               Price
             </Label>
@@ -58,7 +58,9 @@ export function AddItem() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button type="submit" className="btn-generic">
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
