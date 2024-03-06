@@ -7,6 +7,7 @@ import { AddItem } from "@/components/AddItem";
 import DeleteItem from "@/components/DeleteItem";
 import SearchBar from "@/components/SearchBar";
 
+// For displaying the items in the inventory table
 async function GetItems() {
   "use server";
   const supabase = createClient();
@@ -18,16 +19,18 @@ async function GetItems() {
   return { data, error };
 }
 
+// To delete an item from the inventory
 async function handleDelete(Itemid: string) {
   "use server";
   const supabase = createClient();
   const { error } = await supabase.from("items").delete().eq("id", Itemid);
-  // if (error) {
-  //   console.log(error);
-  // }
+  if (error) {
+    console.log(error);
+  }
   return error;
 }
 
+// To create sample items in the inventory
 async function CreateSample(name: string) {
   "use server";
   const supabase = createClient();
@@ -46,6 +49,7 @@ async function CreateSample(name: string) {
   ]);
 }
 
+// Main
 export default async function Main({
   searchParams,
 }: {

@@ -30,14 +30,14 @@ export default function ItemsTable({
   // }, [name, quantity, sales, expiryDate, price, category]); // Add dependencies here
   return (
     <>
-      <tr className="flex justify-between">
+      <div className="flex justify-between">
         <td>{name}</td>
         <td>{quantity}</td>
         <td>{sales}</td>
         <td>{expiryDate}</td>
         <td>{price}</td>
         <td>{category}</td>
-      </tr>
+      </div>
     </>
   );
 }
