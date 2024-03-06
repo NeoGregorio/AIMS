@@ -97,7 +97,8 @@ export function AddItem() {
               </Label>
               <Input
                 id="price"
-                className="col-span-3"
+                type="number"
+                className="col-span-3 appearance-none"
                 onChange={(e) => setPrice(e.target.value)}
               />
             </div>
