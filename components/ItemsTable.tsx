@@ -1,41 +1,38 @@
 "use client";
 import { useState, useEffect } from "react";
 //import { GetItems } from "../app/inventory/page";
+import { TableCell, TableRow } from "@/components/ui/table";
 
 type ItemProps = {
   id: string;
   name: string;
+  category: string;
   quantity: number;
   sales: number;
   expiryDate: string;
   price: number;
-  category: string;
 };
 
 export default function ItemsTable({
   name,
+  category,
   quantity,
   sales,
   expiryDate,
   price,
-  category,
 }: ItemProps) {
-  // const [name, setName] = useState("");
-  // const [items, setItems] = useState<Item[]>([]);
-  // const getItems = async () => {
-  //     setItems(data);
-  // };
-  // useEffect(() => {
-  //   GetItems();
-  // }, [name, quantity, sales, expiryDate, price, category]); // Add dependencies here
+  const currency = "₱";
   return (
-    <div className="flex justify-between">
-      <td>{name}</td>
-      <td>{quantity}</td>
-      <td>{sales}</td>
-      <td>{expiryDate}</td>
-      <td>{price}</td>
-      <td>{category}</td>
-    </div>
+    <TableRow>
+      <TableCell>{name}</TableCell>
+      <TableCell>{category}</TableCell>
+      <TableCell>{quantity}</TableCell>
+      <TableCell>{sales}</TableCell>
+      <TableCell>{expiryDate}</TableCell>
+      <TableCell>
+        {currency}
+        {price}
+      </TableCell>
+    </TableRow>
   );
 }
