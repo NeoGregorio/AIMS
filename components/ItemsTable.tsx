@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
-import { TableCell, TableRow } from "@/components/ui/table";
+import { Table, TableCell, TableRow } from "@/components/ui/table";
 import MoreActions from "@/components/MoreActions";
+import { RestockItem } from "@/components/RestockItem";
+import { SellItem } from "@/components/SellItem";
 
 type ItemProps = {
   id: number;
@@ -33,6 +35,12 @@ export default function ItemsTable({
       <TableCell>
         {currency}
         {price}
+      </TableCell>
+      <TableCell>
+        <RestockItem />
+      </TableCell>
+      <TableCell>
+        <SellItem />
       </TableCell>
       <TableCell>
         <MoreActions itemID={id} itemName={name} />

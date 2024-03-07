@@ -80,7 +80,7 @@ export default async function Main({
             <SearchBar />
           </div>
           <div className="flex flex-row gap-4">
-            <div className="text-graysubtitle flex flex-row items-center gap-2">
+            <div className="text-purple flex flex-row items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -95,7 +95,7 @@ export default async function Main({
               </svg>
               <span>Stocks</span>
             </div>
-            <div className="text-purple flex flex-row items-center gap-2">
+            <div className="text-graysubtitle flex flex-row items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
