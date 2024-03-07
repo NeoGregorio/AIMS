@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
 import DeleteItem from "@/components/DeleteItem";
+import { PurchaseSalesHistory } from "@/components/PurchaseSalesHistory";
 
 import {
   DropdownMenu,
@@ -42,6 +43,9 @@ export default function MoreActions({
         </svg>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white">
+        <DropdownMenuItem>
+          <PurchaseSalesHistory />
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <DeleteItem
             itemID={itemID}
