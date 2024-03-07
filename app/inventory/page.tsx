@@ -26,17 +26,6 @@ async function GetItems() {
   return { data, error };
 }
 
-// To delete an item from the inventory
-async function handleDelete(Itemid: string) {
-  "use server";
-  const supabase = createClient();
-  const { error } = await supabase.from("items").delete().eq("id", Itemid);
-  if (error) {
-    console.log(error);
-  }
-  return error;
-}
-
 // To create sample items in the inventory
 async function CreateSample(name: string) {
   "use server";
@@ -138,14 +127,7 @@ export default async function Main({
             </TableHeader>
             <TableBody className="bg-white">
               {data?.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    <ItemsTable expiryDate={item.expiry ?? "N/A"} {...item} />
-                  </td>
-                  <td>
-                    <DeleteItem item={item} formAction={handleDelete} />
-                  </td>
-                </tr>
+                <ItemsTable expiryDate={item.expiry ?? "N/A"} {...item} />
               ))}
             </TableBody>
           </Table>

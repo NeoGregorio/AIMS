@@ -1,10 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
-//import { GetItems } from "../app/inventory/page";
 import { TableCell, TableRow } from "@/components/ui/table";
+import MoreActions from "@/components/MoreActions";
 
 type ItemProps = {
-  id: string;
+  id: number;
   name: string;
   category: string;
   quantity: number;
@@ -14,6 +14,7 @@ type ItemProps = {
 };
 
 export default function ItemsTable({
+  id,
   name,
   category,
   quantity,
@@ -32,6 +33,9 @@ export default function ItemsTable({
       <TableCell>
         {currency}
         {price}
+      </TableCell>
+      <TableCell>
+        <MoreActions itemID={id} itemName={name} />
       </TableCell>
     </TableRow>
   );
