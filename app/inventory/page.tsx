@@ -1,10 +1,10 @@
 import { createClient } from "@/utils/supabase/server";
 import NavBar from "@/components/NavBar";
 import ItemsTable from "@/components/ItemsTable";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AddItem } from "@/components/AddItem";
 import DeleteItem from "@/components/DeleteItem";
+import AddStock from "@/components/AddStock";
 import SearchBar from "@/components/SearchBar";
 
 // For displaying the items in the inventory table
@@ -12,7 +12,7 @@ async function GetItems() {
   "use server";
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("items").select();
+  const { data, error } = await supabase.from("items").select().order("name");
   if (error) {
     console.log(error);
   }
@@ -20,14 +20,34 @@ async function GetItems() {
 }
 
 // To delete an item from the inventory
-async function handleDelete(Itemid: string) {
+async function handleDelete(itemID: string) {
   "use server";
   const supabase = createClient();
-  const { error } = await supabase.from("items").delete().eq("id", Itemid);
-  if (error) {
-    console.log(error);
+  try {
+    const { error } = await supabase.from("items").delete().eq("id", itemID);
+    if (error) {
+      console.log(error);
+      return error;
+    }
+  } catch (error) {
+    console.error("Error deleting item:", error);
   }
-  return error;
+}
+
+// To add stock to an item in the inventory
+async function handleAddStock(itemID: string, newQty: number) {
+  "use server";
+  const supabase = createClient();
+  try {
+    const { error } = await supabase
+      .from("items")
+      .update({ quantity: newQty })
+      .eq("id", itemID);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+  }
 }
 
 // To create sample items in the inventory
@@ -60,9 +80,6 @@ export default async function Main({
   // CreateSample("Pepsi");
   const { data, error } = await GetItems();
   if (error) {
-    if (error.message == "fetch failed") {
-      return redirect("/inventory?message=Database connection not found.");
-    }
     return redirect("/inventory?message=" + error.message);
   }
   const supabase = createClient();
@@ -139,16 +156,26 @@ export default async function Main({
                 <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
                   Category
                 </th>
+                <th className="px-6 py-3 text-left font-medium tracking-wider text-gray-500">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody className="bg-white">
               {data?.map((item) => (
                 <tr key={item.id}>
                   <td>
-                    <ItemsTable expiryDate={item.expiry ?? "N/A"} {...item} />
+                    <ItemsTable {...item} />
                   </td>
                   <td>
-                    <DeleteItem item={item} formAction={handleDelete} />
+                    <AddStock
+                      itemID={item.id}
+                      oldQty={item.quantity}
+                      handleAddStock={handleAddStock}
+                    />
+                  </td>
+                  <td>
+                    <DeleteItem item={item} OnClick={handleDelete} />
                   </td>
                 </tr>
               ))}

@@ -77,6 +77,7 @@ export function AddItem() {
               </Label>
               <Input
                 id="name"
+                type="text"
                 className="col-span-3"
                 onChange={(e) => setName(e.target.value)}
               />
@@ -87,6 +88,7 @@ export function AddItem() {
               </Label>
               <Input
                 id="category"
+                type="text"
                 className="col-span-3"
                 onChange={(e) => setCategory(e.target.value)}
               />

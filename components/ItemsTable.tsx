@@ -1,6 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
-//import { GetItems } from "../app/inventory/page";
 
 type ItemProps = {
   id: string;
@@ -13,6 +11,7 @@ type ItemProps = {
 };
 
 export default function ItemsTable({
+  id,
   name,
   quantity,
   sales,
@@ -20,21 +19,13 @@ export default function ItemsTable({
   price,
   category,
 }: ItemProps) {
-  // const [name, setName] = useState("");
-  // const [items, setItems] = useState<Item[]>([]);
-  // const getItems = async () => {
-  //     setItems(data);
-  // };
-  // useEffect(() => {
-  //   GetItems();
-  // }, [name, quantity, sales, expiryDate, price, category]); // Add dependencies here
   return (
     <>
       <div className="flex justify-between">
         <td>{name}</td>
         <td>{quantity}</td>
         <td>{sales}</td>
-        <td>{expiryDate}</td>
+        <td>{expiryDate ?? "N/A"} </td>
         <td>{price}</td>
         <td>{category}</td>
       </div>
