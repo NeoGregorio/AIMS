@@ -4,6 +4,7 @@ import ItemsTable from "@/components/ItemsTable";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AddItem } from "@/components/AddItem";
+import DeleteItem from "@/components/DeleteItem";
 import SearchBar from "@/components/SearchBar";
 
 import {
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/table";
 
 async function GetItems() {
+  "use server";
   const supabase = createClient();
 
   const { data, error } = await supabase.from("items").select();
@@ -24,22 +26,45 @@ async function GetItems() {
   return { data, error };
 }
 
+// To delete an item from the inventory
+async function handleDelete(Itemid: string) {
+  "use server";
+  const supabase = createClient();
+  const { error } = await supabase.from("items").delete().eq("id", Itemid);
+  if (error) {
+    console.log(error);
+  }
+  return error;
+}
+
+// To create sample items in the inventory
+async function CreateSample(name: string) {
+  "use server";
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const { data: items, error } = await supabase.from("items").insert([
+    {
+      name,
+      category: "Food",
+      quantity: 0,
+      sales: 0,
+      price: 23,
+      user_id: user?.id,
+    },
+  ]);
+}
+
+// Main
 export default async function Main({
   searchParams,
 }: {
   searchParams: { message: string };
 }) {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
-
+  // CreateSample("Coke");
+  // CreateSample("Sprite");
+  // CreateSample("Pepsi");
   const { data, error } = await GetItems();
   if (error) {
     if (error.message == "fetch failed") {
@@ -113,11 +138,14 @@ export default async function Main({
             </TableHeader>
             <TableBody className="bg-white">
               {data?.map((item) => (
-                <ItemsTable
-                  key={item.id}
-                  expiryDate={item.expiry ?? "N/A"}
-                  {...item}
-                />
+                <tr key={item.id}>
+                  <td>
+                    <ItemsTable expiryDate={item.expiry ?? "N/A"} {...item} />
+                  </td>
+                  <td>
+                    <DeleteItem item={item} formAction={handleDelete} />
+                  </td>
+                </tr>
               ))}
             </TableBody>
           </Table>
