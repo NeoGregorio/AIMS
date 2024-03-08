@@ -19,7 +19,7 @@ async function GetItems() {
   "use server";
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("items").select();
+  const { data, error } = await supabase.from("items").select().order("name");
   if (error) {
     console.log(error);
   }

@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import MoreActions from "@/components/MoreActions";
+import AddStock from "@/components/AddStock";
+import { createClient } from "@/utils/supabase/client";
 
 type ItemProps = {
   id: number;
@@ -12,6 +14,21 @@ type ItemProps = {
   expiryDate: string;
   price: number;
 };
+
+/////////////////////////// To Move Siguro ///////////////////////////
+async function handleAddStock(itemID: number, newQty: number) {
+  const supabase = createClient();
+  try {
+    const { error } = await supabase
+      .from("items")
+      .update({ quantity: newQty })
+      .eq("id", itemID);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+  }
+}
 
 export default function ItemsTable({
   id,
@@ -36,6 +53,13 @@ export default function ItemsTable({
       </TableCell>
       <TableCell>
         <MoreActions itemID={id} itemName={name} oldQty={quantity} />
+      </TableCell>
+      <TableCell>
+        <AddStock
+          itemID={id}
+          oldQty={quantity}
+          handleAddStock={handleAddStock}
+        />
       </TableCell>
     </TableRow>
   );
