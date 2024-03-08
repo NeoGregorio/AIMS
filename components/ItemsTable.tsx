@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 import { TableCell, TableRow } from "@/components/ui/table";
 import MoreActions from "@/components/MoreActions";
 import AddStock from "@/components/AddStock";
@@ -30,6 +29,21 @@ async function handleAddStock(itemID: number, newQty: number) {
   }
 }
 
+async function handleExpiryDate(itemID: number, expiryDate: string) {
+  const supabase = createClient();
+  try {
+    const { error } = await supabase
+      .from("items")
+      .update({ expiry: expiryDate })
+      .eq("id", itemID);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+  }
+}
+///////////////////////////////////////////////////////////////////////
+
 export default function ItemsTable({
   id,
   name,
@@ -52,14 +66,15 @@ export default function ItemsTable({
         {price}
       </TableCell>
       <TableCell>
-        <MoreActions itemID={id} itemName={name} oldQty={quantity} />
-      </TableCell>
-      <TableCell>
         <AddStock
           itemID={id}
           oldQty={quantity}
           handleAddStock={handleAddStock}
+          handleExpiryDate={handleExpiryDate}
         />
+      </TableCell>
+      <TableCell>
+        <MoreActions itemID={id} itemName={name} oldQty={quantity} />
       </TableCell>
     </TableRow>
   );

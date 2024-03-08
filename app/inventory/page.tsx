@@ -1,10 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
 import NavBar from "@/components/NavBar";
 import ItemsTable from "@/components/ItemsTable";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AddItem } from "@/components/AddItem";
-import DeleteItem from "@/components/DeleteItem";
 import SearchBar from "@/components/SearchBar";
 
 import {
