@@ -63,9 +63,14 @@ export default function AddStock({
       return;
     }
     // If the value is valid, update the stock and expiry date
+    if (expiryDate === "") {
+      alert("Please Enter an Expiry Date");
+      return;
+    }
+
     CreatePurchaseRecord(itemID, newValue, expiryDate);
-    handleAddStock(itemID, newValue);
-    handleExpiryDate(itemID, expiryDate).then(() => window.location.reload());
+    handleExpiryDate(itemID, expiryDate);
+    handleAddStock(itemID, newValue).then(() => window.location.reload());
   }
 
   return (
