@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { PurchaseHistory } from "@/components/PurchaseHistory";
 
 import {
   Dialog,
@@ -19,16 +20,16 @@ import { Input } from "@/components/ui/input";
 export function PurchaseSalesHistory() {
   return (
     <Dialog>
-      <DialogTrigger
-        className="underline text-red-600"
-        onClick={(event) => event.stopPropagation()}
-      >
+      <DialogTrigger onClick={(event) => event.stopPropagation()}>
         <span>Purchase & Sales History</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>itemName History</DialogTitle>
-          <DialogDescription>Purchase | Sales</DialogDescription>
+          <DialogDescription>
+            <p>Purchase | Sales</p>
+            <PurchaseHistory />
+          </DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>
