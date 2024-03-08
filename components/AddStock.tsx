@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 
 type AddStockProps = {
   itemID: number;
+  itemName: string;
   oldQty: number;
   handleAddStock: (id: number, newQty: number) => Promise<any>;
   handleExpiryDate: (id: number, expiryDate: string) => Promise<any>;
@@ -54,6 +55,7 @@ async function CreatePurchaseRecord(
 
 export default function AddStock({
   itemID,
+  itemName,
   oldQty,
   handleAddStock,
   handleExpiryDate,
@@ -94,7 +96,7 @@ export default function AddStock({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Restock itemName</DialogTitle>
+          <DialogTitle>Restock {itemName}</DialogTitle>
           <DialogDescription>
             New delivery from your supplier? Input each batch and their
             expiration dates here!

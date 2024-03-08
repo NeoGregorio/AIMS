@@ -4,7 +4,6 @@ import AddStock from "@/components/AddStock";
 import { createClient } from "@/utils/supabase/client";
 import { useState, useEffect } from "react";
 import { Table, TableCell, TableRow } from "@/components/ui/table";
-import { RestockItem } from "@/components/RestockItem";
 import { SellItem } from "@/components/SellItem";
 
 type ItemProps = {
@@ -70,14 +69,11 @@ export default function ItemsTable({
       <TableCell>
         <AddStock
           itemID={id}
+          itemName={name}
           oldQty={quantity}
           handleAddStock={handleAddStock}
           handleExpiryDate={handleExpiryDate}
         />
-      </TableCell>
-      <TableCell>
-        <MoreActions itemID={id} itemName={name} oldQty={quantity} />
-        <RestockItem />
       </TableCell>
       <TableCell>
         <SellItem />
