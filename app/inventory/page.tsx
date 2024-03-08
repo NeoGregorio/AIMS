@@ -34,7 +34,7 @@ async function CreateSample(name: string) {
   const { data: items, error } = await supabase.from("items").insert([
     {
       name,
-      category: "Food",
+      category: "Beverage",
       quantity: 0,
       sales: 0,
       price: 23,
