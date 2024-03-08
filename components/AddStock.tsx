@@ -2,6 +2,20 @@
 import { createClient } from "@/utils/supabase/client";
 import { useState } from "react";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+
 type AddStockProps = {
   itemID: number;
   oldQty: number;
@@ -74,21 +88,55 @@ export default function AddStock({
   }
 
   return (
-    <>
-      <input
-        type="number"
-        placeholder="Add Stock"
-        style={{ width: "90px" }}
-        onChange={(e) => setNewQty(e.target.value)}
-      />
-      <input type="date" onChange={(e) => setExpiryDate(e.target.value)} />
-      <button
-        type="submit"
-        className="border border-slate-300 bg-transparent rounded px-2 py-1 outline-none focus-within:border-slate-100"
-        onClick={handleClick}
-      >
-        Save
-      </button>
-    </>
+    <Dialog>
+      <DialogTrigger className="underline text-sky-500">
+        <span>Restock</span>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Restock itemName</DialogTitle>
+          <DialogDescription>
+            New delivery from your supplier? Input each batch and their
+            expiration dates here!
+          </DialogDescription>
+        </DialogHeader>
+        <form>
+          <div className="grid gap-2 py-4">
+            <div className="grid grid-cols-3 items-center gap-5">
+              <Label htmlFor="quantity" className="text-right">
+                Quantity
+              </Label>
+              <Input
+                id="quantity"
+                type="number"
+                placeholder="Add Stock"
+                className="col-span-2"
+                onChange={(e) => setNewQty(e.target.value)}
+              />
+            </div>
+            <div className="grid grid-cols-3 items-center gap-5">
+              <Label htmlFor="expiration" className="text-right">
+                Expiration Date
+              </Label>
+              <Input
+                id="expiration"
+                type="date"
+                className="col-span-2"
+                onChange={(e) => setExpiryDate(e.target.value)}
+              />
+            </div>
+          </div>
+        </form>
+        <DialogFooter>
+          <button
+            type="submit"
+            className="btn-generic text-sm"
+            onClick={handleClick}
+          >
+            Save
+          </button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
