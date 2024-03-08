@@ -29,9 +29,8 @@ export default function AddStock({
       alert("Stock Cannot be Negative");
       return;
     }
-
+    // If the value is valid, update the stock
     handleAddStock(itemID, newValue).then(() => {
-      // If the value is valid, update the stock
       window.location.reload();
     });
   }
