@@ -1,21 +1,16 @@
 "use client";
-import { useState } from "react";
-import { createClient } from "@/utils/supabase/client";
 import { PurchaseHistory } from "@/components/PurchaseHistory";
+import { SalesHistory } from "@/components/SalesHistory";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 
 export function PurchaseSalesHistory() {
   return (
@@ -27,8 +22,34 @@ export function PurchaseSalesHistory() {
         <DialogHeader>
           <DialogTitle>itemName History</DialogTitle>
           <DialogDescription>
-            <p>Purchase | Sales</p>
-            <PurchaseHistory />
+            <Tabs
+              defaultValue="purchase"
+              className="w-[400px]"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <TabsList className="bg-gray w-full my-2">
+                <TabsTrigger
+                  className="w-1/2"
+                  value="purchase"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  Purchase
+                </TabsTrigger>
+                <TabsTrigger
+                  className="w-1/2"
+                  value="sales"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  Sales
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="purchase">
+                <PurchaseHistory />
+              </TabsContent>
+              <TabsContent value="sales">
+                <SalesHistory />
+              </TabsContent>
+            </Tabs>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
