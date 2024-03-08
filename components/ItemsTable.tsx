@@ -1,8 +1,11 @@
 "use client";
-import { TableCell, TableRow } from "@/components/ui/table";
 import MoreActions from "@/components/MoreActions";
 import AddStock from "@/components/AddStock";
 import { createClient } from "@/utils/supabase/client";
+import { useState, useEffect } from "react";
+import { Table, TableCell, TableRow } from "@/components/ui/table";
+import { RestockItem } from "@/components/RestockItem";
+import { SellItem } from "@/components/SellItem";
 
 type ItemProps = {
   id: number;
@@ -42,7 +45,6 @@ async function handleExpiryDate(itemID: number, expiryDate: string) {
     console.error("Error updating stock:", error);
   }
 }
-///////////////////////////////////////////////////////////////////////
 
 export default function ItemsTable({
   id,
@@ -75,6 +77,13 @@ export default function ItemsTable({
       </TableCell>
       <TableCell>
         <MoreActions itemID={id} itemName={name} oldQty={quantity} />
+        <RestockItem />
+      </TableCell>
+      <TableCell>
+        <SellItem />
+      </TableCell>
+      <TableCell>
+        <MoreActions itemID={id} itemName={name} />
       </TableCell>
     </TableRow>
   );
