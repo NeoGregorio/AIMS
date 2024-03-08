@@ -18,15 +18,19 @@ import { Input } from "@/components/ui/input";
 type AddStockProps = {
   itemID: number;
   itemName: string;
-  oldQty: number;
-  handleAddStock: (id: number, oldQty: number, toAdd: number) => Promise<any>;
+  currentQty: number;
+  handleAddStock: (
+    id: number,
+    currentQty: number,
+    qtyToAdd: number
+  ) => Promise<any>;
   handleExpiryDate: (id: number, expiryDate: string) => Promise<any>;
 };
 
 async function CreatePurchaseRecord(
   item_id: number,
-  oldQty: number,
-  toAdd: number,
+  currentQty: number,
+  qtyToAdd: number,
   expiry: string
 ) {
   const supabase = createClient();
@@ -39,8 +43,8 @@ async function CreatePurchaseRecord(
     const { data, error } = await supabase.from("purchaserecord").insert([
       {
         item_id,
-        quantity: toAdd,
-        current_quantity: oldQty + toAdd,
+        quantity: qtyToAdd,
+        current_quantity: currentQty + qtyToAdd,
         expiry,
         date: new Date().toISOString(),
         user_id: user?.id,
@@ -56,22 +60,22 @@ async function CreatePurchaseRecord(
 export default function AddStock({
   itemID,
   itemName,
-  oldQty,
+  currentQty,
   handleAddStock,
   handleExpiryDate,
 }: AddStockProps) {
-  const [toAdd, setToAdd] = useState("");
+  const [qtyToAdd, setQtyToAdd] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
 
   function handleClick() {
-    const qtyToAdd = parseInt(toAdd); // Convert to number
+    const qtyqtyToAdd = parseInt(qtyToAdd); // Convert to number
 
-    if (isNaN(qtyToAdd)) {
+    if (isNaN(qtyqtyToAdd)) {
       // If no value is entered, return
       alert("Please Enter a Number");
       return;
     }
-    if (qtyToAdd <= 0) {
+    if (qtyqtyToAdd <= 0) {
       // If the value is negative, return
       alert("Please Add Stock");
       return;
@@ -82,9 +86,9 @@ export default function AddStock({
       return;
     }
 
-    CreatePurchaseRecord(itemID, oldQty, qtyToAdd, expiryDate);
+    CreatePurchaseRecord(itemID, currentQty, qtyqtyToAdd, expiryDate);
     handleExpiryDate(itemID, expiryDate);
-    handleAddStock(itemID, oldQty, qtyToAdd).then(() =>
+    handleAddStock(itemID, currentQty, qtyqtyToAdd).then(() =>
       window.location.reload()
     );
   }
@@ -113,7 +117,7 @@ export default function AddStock({
                 type="number"
                 placeholder="Add Stock"
                 className="col-span-2"
-                onChange={(e) => setToAdd(e.target.value)}
+                onChange={(e) => setQtyToAdd(e.target.value)}
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-5">

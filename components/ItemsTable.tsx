@@ -17,12 +17,16 @@ type ItemProps = {
 };
 
 /////////////////////////// To Move Siguro ///////////////////////////
-async function handleAddStock(itemID: number, oldQty: number, toAdd: number) {
+async function handleAddStock(
+  itemID: number,
+  currentQty: number,
+  qtyToAdd: number
+) {
   const supabase = createClient();
   try {
     const { error } = await supabase
       .from("items")
-      .update({ quantity: oldQty + toAdd })
+      .update({ quantity: currentQty + qtyToAdd })
       .eq("id", itemID);
 
     if (error) throw error;
@@ -70,7 +74,7 @@ export default function ItemsTable({
         <AddStock
           itemID={id}
           itemName={name}
-          oldQty={quantity}
+          currentQty={quantity}
           handleAddStock={handleAddStock}
           handleExpiryDate={handleExpiryDate}
         />
@@ -79,7 +83,7 @@ export default function ItemsTable({
         <SellItem />
       </TableCell>
       <TableCell>
-        <MoreActions itemID={id} itemName={name} oldQty={quantity} />
+        <MoreActions itemID={id} itemName={name} currentQty={quantity} />
       </TableCell>
     </TableRow>
   );

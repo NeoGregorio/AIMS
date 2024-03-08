@@ -12,11 +12,11 @@ import {
 export default function MoreActions({
   itemID,
   itemName,
-  oldQty,
+  currentQty,
 }: {
   itemID: number;
   itemName: string;
-  oldQty: number;
+  currentQty: number;
 }) {
   return (
     <DropdownMenu>
