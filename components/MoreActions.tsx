@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/client";
 import DeleteItem from "@/components/DeleteItem";
+import AddStock from "@/components/AddStock";
 
 import {
   DropdownMenu,
@@ -9,21 +10,42 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // To delete an item from the inventory
-async function handleDelete(Itemid: string) {
+async function handleDelete(itemID: number) {
   const supabase = createClient();
-  const { error } = await supabase.from("items").delete().eq("id", Itemid);
-  if (error) {
-    console.log(error);
+  try {
+    const { error } = await supabase.from("items").delete().eq("id", itemID);
+    if (error) {
+      console.log(error);
+      return error;
+    }
+  } catch (error) {
+    console.error("Error deleting item:", error);
   }
-  return error;
+}
+
+// To add stock to an item in the inventory
+async function handleAddStock(itemID: number, newQty: number) {
+  const supabase = createClient();
+  try {
+    const { error } = await supabase
+      .from("items")
+      .update({ quantity: newQty })
+      .eq("id", itemID);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+  }
 }
 
 export default function MoreActions({
   itemID,
   itemName,
+  oldQty,
 }: {
   itemID: number;
   itemName: string;
+  oldQty: number;
 }) {
   return (
     <DropdownMenu>
@@ -47,7 +69,12 @@ export default function MoreActions({
             itemID={itemID}
             itemName={itemName}
             formAction={handleDelete}
-          ></DeleteItem>
+          />
+          <AddStock
+            itemID={itemID}
+            oldQty={oldQty}
+            handleAddStock={handleAddStock}
+          />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -23,11 +23,6 @@ export default function DeleteItem({
 }) {
   // This function is used to delete an item from the inventory
   // then reload the page to update the table
-  const AreYouSure = () => {
-    if (window.confirm("are you sure you want to remove bla bla bla")) {
-      HandleClick();
-    }
-  };
   const HandleClick = () => {
     formAction(itemID).then(() => {
       window.location.reload();

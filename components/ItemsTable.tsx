@@ -35,7 +35,7 @@ export default function ItemsTable({
         {price}
       </TableCell>
       <TableCell>
-        <MoreActions itemID={id} itemName={name} />
+        <MoreActions itemID={id} itemName={name} oldQty={quantity} />
       </TableCell>
     </TableRow>
   );
