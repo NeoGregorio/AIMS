@@ -20,7 +20,7 @@ async function GetItems() {
 }
 
 // To delete an item from the inventory
-async function handleDelete(itemID: string) {
+async function handleDelete(itemID: number) {
   "use server";
   const supabase = createClient();
   try {
@@ -35,13 +35,28 @@ async function handleDelete(itemID: string) {
 }
 
 // To add stock to an item in the inventory
-async function handleAddStock(itemID: string, newQty: number) {
+async function handleAddStock(itemID: number, newQty: number) {
   "use server";
   const supabase = createClient();
   try {
     const { error } = await supabase
       .from("items")
       .update({ quantity: newQty })
+      .eq("id", itemID);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+  }
+}
+
+async function handleExpiryDate(itemID: number, expiryDate: string) {
+  "use server";
+  const supabase = createClient();
+  try {
+    const { error } = await supabase
+      .from("items")
+      .update({ expiry: expiryDate })
       .eq("id", itemID);
 
     if (error) throw error;
@@ -172,6 +187,7 @@ export default async function Main({
                       itemID={item.id}
                       oldQty={item.quantity}
                       handleAddStock={handleAddStock}
+                      handleExpiryDate={handleExpiryDate}
                     />
                   </td>
                   <td>

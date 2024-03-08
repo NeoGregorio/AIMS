@@ -45,6 +45,7 @@ export function AddItem() {
       alert(error.message);
     }
   };
+
   return (
     <Dialog>
       <DialogTrigger className="bg-btn-background hover:bg-btn-background-hover flex flex flex-row items-center gap-2 rounded-full px-6 py-4 text-center text-sm font-semibold leading-4 text-white no-underline shadow-lg transition-colors duration-200 duration-200 ease-in-out">

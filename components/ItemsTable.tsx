@@ -5,7 +5,7 @@ type ItemProps = {
   name: string;
   quantity: number;
   sales: number;
-  expiryDate: string;
+  expiry: string;
   price: number;
   category: string;
 };
@@ -15,7 +15,7 @@ export default function ItemsTable({
   name,
   quantity,
   sales,
-  expiryDate,
+  expiry,
   price,
   category,
 }: ItemProps) {
@@ -25,7 +25,7 @@ export default function ItemsTable({
         <td>{name}</td>
         <td>{quantity}</td>
         <td>{sales}</td>
-        <td>{expiryDate ?? "N/A"} </td>
+        <td>{expiry ?? "N/A"} </td>
         <td>{price}</td>
         <td>{category}</td>
       </div>
