@@ -1,4 +1,5 @@
 "use client";
+import { createClient } from "@/utils/supabase/client";
 
 import {
   AlertDialog,
@@ -15,18 +16,22 @@ import {
 export default function DeleteItem({
   itemID,
   itemName,
-  formAction,
 }: {
   itemID: number;
   itemName: string;
-  formAction: (data: any) => Promise<any>;
 }) {
-  // This function is used to delete an item from the inventory
-  // then reload the page to update the table
-  const HandleClick = () => {
-    formAction(itemID).then(() => {
+  const handleDelete = async () => {
+    const supabase = createClient();
+    try {
+      const { error } = await supabase.from("items").delete().eq("id", itemID);
+      if (error) {
+        console.log(error);
+        return error;
+      }
       window.location.reload();
-    });
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   };
 
   return (
@@ -46,7 +51,7 @@ export default function DeleteItem({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={HandleClick}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={handleDelete}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

@@ -9,35 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// To delete an item from the inventory
-async function handleDelete(itemID: number) {
-  const supabase = createClient();
-  try {
-    const { error } = await supabase.from("items").delete().eq("id", itemID);
-    if (error) {
-      console.log(error);
-      return error;
-    }
-  } catch (error) {
-    console.error("Error deleting item:", error);
-  }
-}
-
-// To add stock to an item in the inventory
-// async function handleAddStock(itemID: number, newQty: number) {
-//   const supabase = createClient();
-//   try {
-//     const { error } = await supabase
-//       .from("items")
-//       .update({ quantity: newQty })
-//       .eq("id", itemID);
-
-//     if (error) throw error;
-//   } catch (error) {
-//     console.error("Error updating stock:", error);
-//   }
-// }
-
 export default function MoreActions({
   itemID,
   itemName,
@@ -68,11 +39,7 @@ export default function MoreActions({
           <PurchaseSalesHistory />
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <DeleteItem
-            itemID={itemID}
-            itemName={itemName}
-            formAction={handleDelete}
-          />
+          <DeleteItem itemID={itemID} itemName={itemName} />
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
