@@ -17,12 +17,12 @@ type ItemProps = {
 };
 
 /////////////////////////// To Move Siguro ///////////////////////////
-async function handleAddStock(itemID: number, newQty: number) {
+async function handleAddStock(itemID: number, oldQty: number, toAdd: number) {
   const supabase = createClient();
   try {
     const { error } = await supabase
       .from("items")
-      .update({ quantity: newQty })
+      .update({ quantity: oldQty + toAdd })
       .eq("id", itemID);
 
     if (error) throw error;

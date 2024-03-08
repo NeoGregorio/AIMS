@@ -24,8 +24,8 @@ async function GetItems() {
   return { data, error };
 }
 
-// To create sample items in the inventory
-async function CreateSample(name: string) {
+// For Testing: To create sample items in the inventory
+async function CreateSample(name: string, category: string = "Food") {
   "use server";
   const supabase = createClient();
   const {
@@ -34,7 +34,7 @@ async function CreateSample(name: string) {
   const { data: items, error } = await supabase.from("items").insert([
     {
       name,
-      category: "Food",
+      category,
       quantity: 0,
       sales: 0,
       price: 23,
@@ -49,9 +49,12 @@ export default async function Main({
 }: {
   searchParams: { message: string };
 }) {
-  // CreateSample("Coke");
-  // CreateSample("Sprite");
-  // CreateSample("Pepsi");
+  // CreateSample("Coke", "Beverage");
+  // CreateSample("Sprite", "Beverage");
+  // CreateSample("Red Horse", "Beverage");
+  // CreateSample("Pringles");
+  // CreateSample("Spam");
+  // CreateSample("Soju", "Beverage");
   const { data, error } = await GetItems();
   if (error) {
     if (error.message == "fetch failed") {
