@@ -68,14 +68,14 @@ export default function AddStock({
   const [expiryDate, setExpiryDate] = useState("");
 
   function handleClick() {
-    const qtyqtyToAdd = parseInt(qtyToAdd); // Convert to number
+    const _qtyToAdd = parseInt(qtyToAdd); // Convert to number
 
-    if (isNaN(qtyqtyToAdd)) {
+    if (isNaN(_qtyToAdd)) {
       // If no value is entered, return
       alert("Please Enter a Number");
       return;
     }
-    if (qtyqtyToAdd <= 0) {
+    if (_qtyToAdd <= 0) {
       // If the value is negative, return
       alert("Please Add Stock");
       return;
@@ -86,9 +86,9 @@ export default function AddStock({
       return;
     }
 
-    CreatePurchaseRecord(itemID, currentQty, qtyqtyToAdd, expiryDate);
+    CreatePurchaseRecord(itemID, currentQty, _qtyToAdd, expiryDate);
     handleExpiryDate(itemID, expiryDate);
-    handleAddStock(itemID, currentQty, qtyqtyToAdd).then(() =>
+    handleAddStock(itemID, currentQty, _qtyToAdd).then(() =>
       window.location.reload()
     );
   }
