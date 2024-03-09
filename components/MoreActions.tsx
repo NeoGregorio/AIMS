@@ -36,7 +36,7 @@ export default function MoreActions({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-white">
         <DropdownMenuItem>
-          <PurchaseSalesHistory />
+          <PurchaseSalesHistory itemID={itemID} itemName={itemName} />
         </DropdownMenuItem>
         <DropdownMenuItem>
           <DeleteItem itemID={itemID} itemName={itemName} />

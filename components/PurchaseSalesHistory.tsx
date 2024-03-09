@@ -1,5 +1,5 @@
 "use client";
-import { PurchaseHistory } from "@/components/PurchaseHistory";
+import PurchaseHistory from "@/components/PurchaseHistory";
 import { SalesHistory } from "@/components/SalesHistory";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -12,7 +12,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export function PurchaseSalesHistory() {
+export function PurchaseSalesHistory({
+  itemID,
+  itemName,
+}: {
+  itemID: number;
+  itemName: string;
+}) {
   return (
     <Dialog>
       <DialogTrigger onClick={(event) => event.stopPropagation()}>
@@ -20,7 +26,7 @@ export function PurchaseSalesHistory() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>itemName History</DialogTitle>
+          <DialogTitle>{itemName} History</DialogTitle>
           <DialogDescription>
             <Tabs
               defaultValue="purchase"
@@ -44,7 +50,7 @@ export function PurchaseSalesHistory() {
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="purchase">
-                <PurchaseHistory />
+                <PurchaseHistory itemID={itemID} />
               </TabsContent>
               <TabsContent value="sales">
                 <SalesHistory />

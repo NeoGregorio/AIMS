@@ -1,5 +1,6 @@
 "use client";
-
+import { createClient } from "@/utils/supabase/client";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -9,7 +10,33 @@ import {
   TableCell,
 } from "@/components/ui/table";
 
-export function PurchaseHistory() {
+async function GetPurchaseHistory(itemID: number) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("purchaserecord")
+    .select()
+    .eq("item_id", itemID)
+    .order("date", { ascending: false });
+  if (error) {
+    console.log(error);
+    throw error;
+  }
+  return data;
+}
+
+export default function PurchaseHistory({ itemID }: { itemID: number }) {
+  const [data, setData] = useState<any[] | null>(null);
+
+  // retrieve purchase records when itemID changes
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await GetPurchaseHistory(itemID);
+      setData(result);
+    };
+    fetchData();
+  }, [itemID]);
+
   return (
     <Table>
       <TableHeader>
@@ -20,11 +47,13 @@ export function PurchaseHistory() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>1</TableCell>
-          <TableCell>2002-05-02</TableCell>
-          <TableCell>2002-05-25</TableCell>
-        </TableRow>
+        {data?.map((record) => (
+          <TableRow key={record.id}>
+            <TableCell>{record.quantity}</TableCell>
+            <TableCell>{record.expiry}</TableCell>
+            <TableCell>{record.date}</TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );

@@ -13,15 +13,44 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+async function GetEarliestExpiry(itemID: number) {
+  "use server";
+  const supabase = createClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("purchaserecord")
+      .select("expiry")
+      .eq("item_id", itemID)
+      .order("expiry", { ascending: true })
+      .limit(1);
+
+    if (error) {
+      console.log(error);
+      throw error;
+    }
+
+    const earliestExpiry = data[0]?.expiry;
+    return earliestExpiry ?? "N/A";
+  } catch (error) {
+    return null;
+  }
+}
+
 async function GetItems() {
   "use server";
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("items").select().order("name");
-  if (error) {
-    console.log(error);
+  try {
+    const { data, error } = await supabase.from("items").select().order("name");
+    if (error) {
+      console.log(error);
+      throw error;
+    }
+    return data;
+  } catch (error) {
+    return null;
   }
-  return { data, error };
 }
 
 // For Testing: To create sample items in the inventory
@@ -55,13 +84,8 @@ export default async function Main({
   // CreateSample("Pringles");
   // CreateSample("Spam");
   // CreateSample("Soju", "Beverage");
-  const { data, error } = await GetItems();
-  if (error) {
-    if (error.message == "fetch failed") {
-      return redirect("/inventory?message=Database connection not found.");
-    }
-    return redirect("/inventory?message=" + error.message);
-  }
+  const data = await GetItems();
+
   const supabase = createClient();
   const {
     data: { user },
@@ -128,7 +152,7 @@ export default async function Main({
             </TableHeader>
             <TableBody className="bg-white">
               {data?.map((item) => (
-                <ItemsTable expiryDate={item.expiry ?? "N/A"} {...item} />
+                <ItemsTable expiryDate={GetEarliestExpiry(item.id)} {...item} />
               ))}
             </TableBody>
           </Table>
