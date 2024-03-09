@@ -14,17 +14,15 @@ import {
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { item } from "@/types/supabase";
 
 type AddStockProps = {
-  itemID: number;
-  itemName: string;
-  currentQty: number;
+  item: item;
   handleAddStock: (
-    id: number,
-    currentQty: number,
+    item: item,
+    expiryDate: string,
     qtyToAdd: number
   ) => Promise<any>;
-  handleExpiryDate: (id: number, expiryDate: string) => Promise<any>;
 };
 
 async function CreatePurchaseRecord(
@@ -57,13 +55,7 @@ async function CreatePurchaseRecord(
   }
 }
 
-export default function AddStock({
-  itemID,
-  itemName,
-  currentQty,
-  handleAddStock,
-  handleExpiryDate,
-}: AddStockProps) {
+export default function AddStock({ item, handleAddStock }: AddStockProps) {
   const [qtyToAdd, setQtyToAdd] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
 
@@ -86,9 +78,8 @@ export default function AddStock({
       return;
     }
 
-    CreatePurchaseRecord(itemID, currentQty, _qtyToAdd, expiryDate);
-    handleExpiryDate(itemID, expiryDate);
-    handleAddStock(itemID, currentQty, _qtyToAdd).then(() =>
+    CreatePurchaseRecord(item.id, item.quantity, _qtyToAdd, expiryDate);
+    handleAddStock(item, expiryDate, _qtyToAdd).then(() =>
       window.location.reload()
     );
   }
@@ -100,7 +91,7 @@ export default function AddStock({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Restock {itemName}</DialogTitle>
+          <DialogTitle>Restock {item.name}</DialogTitle>
           <DialogDescription>
             New delivery from your supplier? Input each batch and their
             expiration dates here!

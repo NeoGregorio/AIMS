@@ -3,31 +3,33 @@
 import MoreActions from "@/components/MoreActions";
 import AddStock from "@/components/AddStock";
 import { createClient } from "@/utils/supabase/client";
-import { Table, TableCell, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableCell,
+  TableRow,
+  TableHead,
+  TableHeader,
+  TableBody,
+} from "@/components/ui/table";
 import { SellItem } from "@/components/SellItem";
-
-type ItemProps = {
-  id: number;
-  name: string;
-  category: string;
-  quantity: number;
-  sales: number;
-  expiryDate: string;
-  price: number;
-};
+import { item } from "@/types/supabase";
 
 /////////////////////////// To Move Siguro ///////////////////////////
 async function handleAddStock(
-  itemID: number,
-  currentQty: number,
+  item: item,
+  expiryDate: string,
   qtyToAdd: number
 ) {
   const supabase = createClient();
+  const date = new Date().toLocaleDateString();
+  const earliestExpiry =
+    (item.expiry ?? expiryDate) < expiryDate! ? item.expiry : expiryDate;
+
   try {
     const { error } = await supabase
       .from("items")
-      .update({ quantity: currentQty + qtyToAdd })
-      .eq("id", itemID);
+      .update({ quantity: item.quantity + qtyToAdd, expiry: earliestExpiry })
+      .eq("id", item.id);
 
     if (error) throw error;
   } catch (error) {
@@ -35,56 +37,50 @@ async function handleAddStock(
   }
 }
 
-async function handleExpiryDate(itemID: number, expiryDate: string) {
-  const supabase = createClient();
-  try {
-    const { error } = await supabase
-      .from("items")
-      .update({ expiry: expiryDate })
-      .eq("id", itemID);
-
-    if (error) throw error;
-  } catch (error) {
-    console.error("Error updating stock:", error);
-  }
-}
-
-export default function ItemsTable({
-  id,
-  name,
-  category,
-  quantity,
-  sales,
-  expiryDate,
-  price,
-}: ItemProps) {
+export default function ItemsTable({ data }: { data: item[] }) {
   const currency = "₱";
   return (
-    <TableRow>
-      <TableCell>{name}</TableCell>
-      <TableCell>{category}</TableCell>
-      <TableCell>{quantity}</TableCell>
-      <TableCell>{sales}</TableCell>
-      <TableCell>{expiryDate}</TableCell>
-      <TableCell>
-        {currency}
-        {price}
-      </TableCell>
-      <TableCell>
-        <AddStock
-          itemID={id}
-          itemName={name}
-          currentQty={quantity}
-          handleAddStock={handleAddStock}
-          handleExpiryDate={handleExpiryDate}
-        />
-      </TableCell>
-      <TableCell>
-        <SellItem />
-      </TableCell>
-      <TableCell>
-        <MoreActions itemID={id} itemName={name} currentQty={quantity} />
-      </TableCell>
-    </TableRow>
+    <div className="flex items-center justify-center">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Quantity</TableHead>
+            <TableHead>Sales</TableHead>
+            <TableHead>Earliest Expiry Date</TableHead>
+            <TableHead>Price</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody className="bg-white">
+          {data?.map((item) => (
+            <TableRow>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>{item.category}</TableCell>
+              <TableCell>{item.quantity}</TableCell>
+              <TableCell>{item.sales}</TableCell>
+              <TableCell>{item.expiry}</TableCell>
+              <TableCell>
+                {currency}
+                {item.price}
+              </TableCell>
+              <TableCell>
+                <AddStock item={item} handleAddStock={handleAddStock} />
+              </TableCell>
+              <TableCell>
+                <SellItem />
+              </TableCell>
+              <TableCell>
+                <MoreActions
+                  itemID={item.id}
+                  itemName={item.name}
+                  currentQty={item.quantity}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

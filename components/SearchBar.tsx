@@ -1,9 +1,11 @@
-import AuthButton from "../components/AuthButton";
-import { createClient } from "@/utils/supabase/server";
-import Image from "next/image";
-import Link from "next/link";
-
-export default function SearchBar() {
+"use client";
+export default function SearchBar({
+  search,
+  setSearch,
+}: {
+  search: string;
+  setSearch: (search: string) => void;
+}) {
   return (
     <div className="bg-gray flex w-full items-center rounded-md px-4 py-4">
       <svg
@@ -20,6 +22,7 @@ export default function SearchBar() {
       </svg>
       <input
         type="text"
+        onChange={(e) => setSearch(e.target.value)}
         placeholder="Quickly find your product!"
         className="text-black-600/50 flex-grow bg-transparent text-sm outline-none"
       />
