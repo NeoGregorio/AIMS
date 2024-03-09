@@ -60,7 +60,7 @@ async function CreateSample(name: string, category: string = "Food") {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const { data: items, error } = await supabase.from("items").insert([
+  await supabase.from("items").insert([
     {
       name,
       category,
@@ -146,7 +146,7 @@ export default async function Main({
                 <TableHead>Category</TableHead>
                 <TableHead>Quantity</TableHead>
                 <TableHead>Sales</TableHead>
-                <TableHead>Expiry Date</TableHead>
+                <TableHead>Earliest Expiry Date</TableHead>
                 <TableHead>Price</TableHead>
               </TableRow>
             </TableHeader>

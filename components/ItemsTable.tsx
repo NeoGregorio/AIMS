@@ -1,8 +1,8 @@
 "use client";
+
 import MoreActions from "@/components/MoreActions";
 import AddStock from "@/components/AddStock";
 import { createClient } from "@/utils/supabase/client";
-import { useState, useEffect } from "react";
 import { Table, TableCell, TableRow } from "@/components/ui/table";
 import { SellItem } from "@/components/SellItem";
 
