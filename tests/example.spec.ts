@@ -163,12 +163,12 @@ test("7b. Invalid Password Format", async ({ page }) => {
 
 test("8. Add new Item", async ({ page }) => {
   test.setTimeout(100000);
-  await page.goto("http://localhost:3000/login");
+  await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
   await page.click("text=Sign in");
   await page.waitForNavigation();
-  await page.goto("http://localhost:3000/inventory");
+  await page.goto("https://aims-omega.vercel.app/inventory");
   await page.click("text=Add new item");
   await page.fill('input[name="name"]', "Sample Item");
   await page.fill('input[name="category"]', "Sample category");
@@ -177,7 +177,7 @@ test("8. Add new Item", async ({ page }) => {
   await page.waitForNavigation();
   const currentUrl = page.url();
   expect(currentUrl).toBe(
-    `http://localhost:3000/inventory?message=Item%20added%20successfully`,
+    `https://aims-omega.vercel.app/inventory?message=Item%20added%20successfully`,
   );
 });
 
@@ -188,12 +188,12 @@ test("9a. Does not allow adding new items if they did not input a name.", async 
   page.on("dialog", (alert) => {
     errors.push(alert.message());
   });
-  await page.goto("http://localhost:3000/login");
+  await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
   await page.click("text=Sign in");
   await page.waitForNavigation();
-  await page.goto("http://localhost:3000/inventory");
+  await page.goto("https://aims-omega.vercel.app/inventory");
   await page.click("text=Add new item");
   await page.fill('input[name="category"]', "Sample category");
   await page.fill('input[name="price"]', "100", { force: true });
@@ -211,12 +211,12 @@ test("9b. Does not allow adding new items if they did not input a category.", as
   page.on("dialog", (alert) => {
     errors.push(alert.message());
   });
-  await page.goto("http://localhost:3000/login");
+  await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
   await page.click("text=Sign in");
   await page.waitForNavigation();
-  await page.goto("http://localhost:3000/inventory");
+  await page.goto("https://aims-omega.vercel.app/inventory");
   await page.click("text=Add new item");
   await page.fill('input[name="name"]', "Sample name");
   await page.fill('input[name="price"]', "100", { force: true });
@@ -234,12 +234,12 @@ test("9c. Does not allow adding new items if they did not input a price.", async
   page.on("dialog", (alert) => {
     errors.push(alert.message());
   });
-  await page.goto("http://localhost:3000/login");
+  await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
   await page.click("text=Sign in");
   await page.waitForNavigation();
-  await page.goto("http://localhost:3000/inventory");
+  await page.goto("https://aims-omega.vercel.app/inventory");
   await page.click("text=Add new item");
   await page.fill('input[name="name"]', "Sample name");
   await page.fill('input[name="category"]', "Sample category");
@@ -257,12 +257,12 @@ test("9d. Does not allow adding new items if they did not input an invalid price
   page.on("dialog", (alert) => {
     errors.push(alert.message());
   });
-  await page.goto("http://localhost:3000/login");
+  await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
   await page.click("text=Sign in");
   await page.waitForNavigation();
-  await page.goto("http://localhost:3000/inventory");
+  await page.goto("https://aims-omega.vercel.app/inventory");
   await page.click("text=Add new item");
   await page.fill('input[name="name"]', "Sample name");
   await page.fill('input[name="category"]', "Sample category");
@@ -275,18 +275,17 @@ test("9d. Does not allow adding new items if they did not input an invalid price
 });
 
 test("11. Add stock to Item", async ({ page }) => {
-  await page.goto("http://localhost:3000/login");
+  await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
   await page.click("text=Sign in");
-  await page.waitForNavigation();
-  await page.goto("http://localhost:3000/inventory");
+  await page.goto("https://aims-omega.vercel.app/inventory");
   await page.click("button#Samplerestockbtn");
   await page.fill('input[name="quantity"]', "10", { force: true });
   await page.click("text=Save");
   await page.waitForNavigation();
   const currentUrl = page.url();
   expect(currentUrl).toBe(
-    `http://localhost:3000/inventory?message=Stock%20added%20successfully`,
+    `https://aims-omega.vercel.app/inventory?message=Stock%20added%20successfully`,
   );
 });
