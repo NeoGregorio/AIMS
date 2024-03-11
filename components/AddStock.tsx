@@ -64,12 +64,12 @@ export default function AddStock({ item, handleAddStock }: AddStockProps) {
 
     if (isNaN(_qtyToAdd)) {
       // If no value is entered, return
-      alert("Please Enter a Number");
+      alert("Please enter a valid quantity");
       return;
     }
     if (_qtyToAdd <= 0) {
       // If the value is negative, return
-      alert("Please Add Stock");
+      alert("Please enter a valid quantity");
       return;
     }
     // If the value is valid, update the stock and expiry date
