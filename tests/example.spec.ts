@@ -10,7 +10,7 @@ function getRandomLetter(): string {
   const randomLetter = alphabet.charAt(randomIndex);
   return randomLetter;
 }
-/*
+
 ////////// Test for Successful Redirection to Sign Up Page (No account yet) //////////
 test("1. Successful Redirection to Sign Up Page", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/login"); // Go to login page
@@ -223,7 +223,7 @@ test("9b. Does not allow adding new items if they did not input a category.", as
   await page.click("button#additembtn", { force: true });
   await page.waitForTimeout(5000);
   expect(errors).toStrictEqual([
-    "Please fill up every field with valid inputs"
+    "Please fill up every field with valid inputs",
   ]);
 });
 
@@ -292,7 +292,7 @@ test("10. Delete Item", async ({ page }) => {
   );
 });
 
-test("11a. Add stock to Item", async ({ page }) => {
+test("11. Add stock to Item", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
@@ -308,43 +308,3 @@ test("11a. Add stock to Item", async ({ page }) => {
     `https://aims-omega.vercel.app/inventory?message=Stock%20added%20successfully`,
   );
 });
-
-test("11b. Does not allow to add stock to Item if quantity is not inputted", async ({
-  page,
-}) => {
-  const errors: any[] = [];
-  page.on("dialog", (alert) => {
-    errors.push(alert.message());
-  });
-  await page.goto("https://aims-omega.vercel.app/login");
-  await page.fill('input[name="email"]', "abc@gmail.com");
-  await page.fill('input[name="password"]', "abcdef");
-  await page.click("text=Sign in");
-  await page.waitForNavigation();
-  await page.goto("https://aims-omega.vercel.app/inventory");
-  await page.click("#Samplerestockbtn");
-  await page.click("text=Save");
-  await page.waitForTimeout(5000);
-  expect(errors).toStrictEqual(["Please input a valid quantity"]);
-});
-
-test("11c. Does not allow to add stock to Item if quantity is not valid", async ({
-  page,
-}) => {
-  const errors: any[] = [];
-  page.on("dialog", (alert) => {
-    errors.push(alert.message());
-  });
-  await page.goto("https://aims-omega.vercel.app/login");
-  await page.fill('input[name="email"]', "abc@gmail.com");
-  await page.fill('input[name="password"]', "abcdef");
-  await page.click("text=Sign in");
-  await page.waitForNavigation();
-  await page.goto("https://aims-omega.vercel.app/inventory");
-  await page.click("#Samplerestockbtn");
-  await page.fill('input[name="quantity"]', "-1", { force: true });
-  await page.click("button#restockbtn", { force: true });
-  await page.waitForTimeout(5000);
-  expect(errors).toStrictEqual(["Please input a valid quantity"]);
-});
-*/
