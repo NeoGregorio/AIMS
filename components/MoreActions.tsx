@@ -20,12 +20,12 @@ export default function MoreActions({
 }) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger name={`${itemName}moreactions`}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="graysubtitle"
-          className="w-6 h-6"
+          className="h-6 w-6"
         >
           <path
             fill-rule="evenodd"

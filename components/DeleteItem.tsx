@@ -28,7 +28,7 @@ export default function DeleteItem({
         console.log(error);
         return error;
       }
-      window.location.reload();
+      window.location.replace("/inventory?message=Item deleted");
     } catch (error) {
       console.error("Error deleting item:", error);
     }

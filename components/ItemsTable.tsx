@@ -18,7 +18,7 @@ import { item } from "@/types/supabase";
 async function handleAddStock(
   item: item,
   expiryDate: string,
-  qtyToAdd: number
+  qtyToAdd: number,
 ) {
   const supabase = createClient();
   const date = new Date().toLocaleDateString();

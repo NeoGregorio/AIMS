@@ -21,7 +21,7 @@ type AddStockProps = {
   handleAddStock: (
     item: item,
     expiryDate: string,
-    qtyToAdd: number
+    qtyToAdd: number,
   ) => Promise<any>;
 };
 
@@ -29,7 +29,7 @@ async function CreatePurchaseRecord(
   item_id: number,
   currentQty: number,
   qtyToAdd: number,
-  expiry: string
+  expiry: string,
 ) {
   const supabase = createClient();
   // Get current user
@@ -48,7 +48,6 @@ async function CreatePurchaseRecord(
         user_id: user?.id,
       },
     ]);
-    window.location.reload();
     if (error) throw error;
   } catch (error: any) {
     alert(error.message);
@@ -56,8 +55,9 @@ async function CreatePurchaseRecord(
 }
 
 export default function AddStock({ item, handleAddStock }: AddStockProps) {
+  const dateToday = new Date().toISOString().split("T")[0];
   const [qtyToAdd, setQtyToAdd] = useState("");
-  const [expiryDate, setExpiryDate] = useState("");
+  const [expiryDate, setExpiryDate] = useState(dateToday);
 
   function handleClick() {
     const _qtyToAdd = parseInt(qtyToAdd); // Convert to number
@@ -80,13 +80,16 @@ export default function AddStock({ item, handleAddStock }: AddStockProps) {
 
     CreatePurchaseRecord(item.id, item.quantity, _qtyToAdd, expiryDate);
     handleAddStock(item, expiryDate, _qtyToAdd).then(() =>
-      window.location.reload()
+      window.location.replace("/inventory?message=Stock added successfully"),
     );
   }
 
   return (
     <Dialog>
-      <DialogTrigger className="underline text-sky-500">
+      <DialogTrigger
+        className="text-sky-500 underline"
+        id={`${item.name}restockbtn`}
+      >
         <span>Restock</span>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -106,6 +109,7 @@ export default function AddStock({ item, handleAddStock }: AddStockProps) {
               <Input
                 id="quantity"
                 type="number"
+                name="quantity"
                 placeholder="Add Stock"
                 className="col-span-2"
                 onChange={(e) => setQtyToAdd(e.target.value)}
@@ -117,7 +121,9 @@ export default function AddStock({ item, handleAddStock }: AddStockProps) {
               </Label>
               <Input
                 id="expiration"
+                name="expiration"
                 type="date"
+                defaultValue={expiryDate}
                 className="col-span-2"
                 onChange={(e) => setExpiryDate(e.target.value)}
               />

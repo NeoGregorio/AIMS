@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { redirect } from "next/navigation";
 
 export function AddItem() {
   const [name, setName] = useState("");
@@ -39,15 +40,25 @@ export function AddItem() {
           user_id: user?.id,
         },
       ]);
-      window.location.reload();
-      if (error) throw error;
+      if (error) {
+        if (
+          error.message.includes("invalid input syntax") ||
+          error.message.includes("check constraint")
+        ) {
+          alert("Please fill up every field with valid inputs");
+        } else {
+          throw error;
+        }
+      } else {
+        window.location.replace("/inventory?message=Item added successfully");
+      }
     } catch (error: any) {
-      alert(error.message);
+      if (error.message.includes) alert(error.message);
     }
   };
   return (
     <Dialog>
-      <DialogTrigger className="bg-btn-background hover:bg-btn-background-hover flex flex flex-row items-center gap-2 rounded-full px-6 py-4 text-center text-sm font-semibold leading-4 text-white no-underline shadow-lg transition-colors duration-200 duration-200 ease-in-out">
+      <DialogTrigger className="bg-btn-background hover:bg-btn-background-hover flex  flex-row items-center gap-2 rounded-full px-6 py-4 text-center text-sm font-semibold leading-4 text-white no-underline shadow-lg transition-colors duration-200 duration-200 ease-in-out">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -60,7 +71,7 @@ export function AddItem() {
             clipRule="evenodd"
           />
         </svg>
-        <span>Add new item</span>
+        Add new item
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -77,6 +88,7 @@ export function AddItem() {
               </Label>
               <Input
                 id="name"
+                name="name"
                 className="col-span-3"
                 onChange={(e) => setName(e.target.value)}
               />
@@ -87,6 +99,7 @@ export function AddItem() {
               </Label>
               <Input
                 id="category"
+                name="category"
                 className="col-span-3"
                 onChange={(e) => setCategory(e.target.value)}
               />
@@ -97,6 +110,7 @@ export function AddItem() {
               </Label>
               <Input
                 id="price"
+                name="price"
                 type="number"
                 className="col-span-3 appearance-none"
                 onChange={(e) => setPrice(e.target.value)}
@@ -105,7 +119,12 @@ export function AddItem() {
           </div>
         </form>
         <DialogFooter>
-          <Button type="submit" onClick={handleAdd} className="btn-generic">
+          <Button
+            type="submit"
+            onClick={handleAdd}
+            className="btn-generic"
+            id="additembtn"
+          >
             Save
           </Button>
         </DialogFooter>
