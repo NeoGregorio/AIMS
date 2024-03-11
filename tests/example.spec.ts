@@ -279,8 +279,9 @@ test("11. Add stock to Item", async ({ page }) => {
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
   await page.click("text=Sign in");
+  await page.waitForNavigation();
   await page.goto("https://aims-omega.vercel.app/inventory");
-  await page.click("button#Samplerestockbtn");
+  await page.locator("text=Restock").nth(0).click();
   await page.fill('input[name="quantity"]', "10", { force: true });
   await page.click("text=Save");
   await page.waitForNavigation();
