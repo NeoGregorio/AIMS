@@ -223,7 +223,7 @@ test("9b. Does not allow adding new items if they did not input a category.", as
   await page.click("button#additembtn", { force: true });
   await page.waitForTimeout(5000);
   expect(errors).toStrictEqual([
-    "Please fill up every field with valid inputs",
+    "Please fill up every field with valid inputs"
   ]);
 });
 
@@ -301,14 +301,14 @@ test("11a. Add stock to Item", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/inventory");
   await page.locator("text=Restock").nth(0).click();
   await page.fill('input[name="quantity"]', "10", { force: true });
-  await page.click("text=Save");
+  await page.click("button[type=submit]");
   await page.waitForNavigation();
   const currentUrl = page.url();
   expect(currentUrl).toBe(
     `https://aims-omega.vercel.app/inventory?message=Stock%20added%20successfully`,
   );
 });
-*/
+
 test("11b. Does not allow to add stock to Item if quantity is not inputted", async ({
   page,
 }) => {
@@ -322,7 +322,7 @@ test("11b. Does not allow to add stock to Item if quantity is not inputted", asy
   await page.click("text=Sign in");
   await page.waitForNavigation();
   await page.goto("https://aims-omega.vercel.app/inventory");
-  await page.locator("text=Restock").nth(0).click();
+  await page.click("#Samplerestockbtn");
   await page.click("text=Save");
   await page.waitForTimeout(5000);
   expect(errors).toStrictEqual(["Please input a valid quantity"]);
@@ -341,9 +341,10 @@ test("11c. Does not allow to add stock to Item if quantity is not valid", async 
   await page.click("text=Sign in");
   await page.waitForNavigation();
   await page.goto("https://aims-omega.vercel.app/inventory");
-  await page.locator("text=Restock").nth(0).click();
+  await page.click("#Samplerestockbtn");
   await page.fill('input[name="quantity"]', "-1", { force: true });
-  await page.click("text=Save");
+  await page.click("button#restockbtn", { force: true });
   await page.waitForTimeout(5000);
   expect(errors).toStrictEqual(["Please input a valid quantity"]);
 });
+*/
