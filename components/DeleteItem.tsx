@@ -25,12 +25,22 @@ export default function DeleteItem({
     try {
       const { error } = await supabase.from("items").delete().eq("id", itemID);
       if (error) {
-        console.log(error);
-        return error;
+        if (error.message.includes("NetworkError")) {
+          alert("Database Connection Not Found");
+          return error;
+        } else {
+          console.log(error);
+          return error;
+        }
       }
       window.location.replace("/inventory?message=Item deleted");
-    } catch (error) {
-      console.error("Error deleting item:", error);
+    } catch (error: any) {
+      if (error.message.includes("NetworkError")) {
+        alert("Database Connection Not Found");
+        return error;
+      } else {
+        alert(error);
+      }
     }
   };
 

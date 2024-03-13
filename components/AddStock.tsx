@@ -48,9 +48,12 @@ async function CreatePurchaseRecord(
         user_id: user?.id,
       },
     ]);
-    if (error) throw error;
   } catch (error: any) {
-    alert(error.message);
+    if (error.message.includes("NetworkError")) {
+      alert("Database Connection Not Found");
+    } else {
+      alert(error.message);
+    }
   }
 }
 

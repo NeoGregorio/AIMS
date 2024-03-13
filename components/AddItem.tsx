@@ -46,6 +46,8 @@ export function AddItem() {
           error.message.includes("check constraint")
         ) {
           alert("Please fill up every field with valid inputs");
+        }else if(error.message.includes("NetworkError")){
+          alert("Database Connection Not Found")
         } else {
           throw error;
         }
