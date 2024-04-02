@@ -18,18 +18,34 @@ import { item } from "@/types/supabase";
 
 type AddStockProps = {
   item: item;
-  handleAddStock: (
-    item: item,
-    expiryDate: string,
-    qtyToAdd: number,
-  ) => Promise<any>;
 };
+
+async function handleAddStock(
+  item: item,
+  expiryDate: string,
+  qtyToAdd: number
+) {
+  const supabase = createClient();
+  const earliestExpiry =
+    (item.expiry ?? expiryDate) < expiryDate! ? item.expiry : expiryDate;
+
+  try {
+    const { error } = await supabase
+      .from("items")
+      .update({ quantity: item.quantity + qtyToAdd, expiry: earliestExpiry })
+      .eq("id", item.id);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+  }
+}
 
 async function CreatePurchaseRecord(
   item_id: number,
   currentQty: number,
   qtyToAdd: number,
-  expiry: string,
+  expiry: string
 ) {
   const supabase = createClient();
   // Get current user
@@ -57,7 +73,7 @@ async function CreatePurchaseRecord(
   }
 }
 
-export default function AddStock({ item, handleAddStock }: AddStockProps) {
+export default function AddStock({ item }: AddStockProps) {
   const dateToday = new Date().toISOString().split("T")[0];
   const [qtyToAdd, setQtyToAdd] = useState("");
   const [expiryDate, setExpiryDate] = useState(dateToday);
@@ -83,7 +99,7 @@ export default function AddStock({ item, handleAddStock }: AddStockProps) {
 
     CreatePurchaseRecord(item.id, item.quantity, _qtyToAdd, expiryDate);
     handleAddStock(item, expiryDate, _qtyToAdd).then(() =>
-      window.location.replace("/inventory?message=Stock added successfully"),
+      window.location.replace("/inventory?message=Stock added successfully")
     );
   }
 
