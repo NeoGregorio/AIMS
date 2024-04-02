@@ -15,8 +15,42 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { item } from "@/types/supabase";
 
-export function SellItem() {
+type SellItemProps = {
+  item: item;
+};
+
+async function handleSellItem(item: item, qtyToSell: number) {
+  const supabase = createClient();
+  // const earliestExpiry =
+  //   (item.expiry ?? expiryDate) < expiryDate! ? item.expiry : expiryDate;
+
+  try {
+    const { error } = await supabase
+      .from("items")
+      .update({
+        quantity: item.quantity - qtyToSell,
+        sales: item.sales + qtyToSell,
+      })
+      .eq("id", item.id);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error("Error updating stock:", error);
+  }
+}
+
+export function SellItem({ item }: SellItemProps) {
+  const [qtyToSell, setQtyToSell] = useState("");
+
+  function handleClick() {
+    const _qtyToSell = parseInt(qtyToSell); // Convert to number
+
+    handleSellItem(item, _qtyToSell).then(() =>
+      window.location.replace("/inventory?message=Stock sold successfully")
+    );
+  }
   return (
     <Dialog>
       <DialogTrigger className="underline text-red-600">
@@ -35,14 +69,25 @@ export function SellItem() {
               <Label htmlFor="quantity" className="text-left">
                 Quantity
               </Label>
-              <Input id="quantity" className="text-left col-span-1" />
+              <Input
+                id="quantity"
+                type="number"
+                name="quantity"
+                className="text-left col-span-1"
+                onChange={(e) => setQtyToSell(e.target.value)}
+              />
             </div>
           </div>
         </form>
         <DialogFooter>
-          <Button type="submit" className="btn-generic">
+          <button
+            type="submit"
+            className="btn-generic text-sm"
+            onClick={handleClick}
+            id={`${item.name}restockconfirm`}
+          >
             Save
-          </Button>
+          </button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
