@@ -9,6 +9,7 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
+import { ScrollArea } from "./ui/scroll-area";
 
 async function GetPurchaseHistory(itemID: number) {
   const supabase = createClient();
@@ -38,23 +39,25 @@ export default function PurchaseHistory({ itemID }: { itemID: number }) {
   }, [itemID]);
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Quantity</TableHead>
-          <TableHead>Expiry</TableHead>
-          <TableHead>Date of Purchase</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data?.map((record) => (
-          <TableRow key={record.id}>
-            <TableCell>{record.quantity}</TableCell>
-            <TableCell>{record.expiry}</TableCell>
-            <TableCell>{record.date}</TableCell>
+    <ScrollArea className="h-[50vh]">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Quantity</TableHead>
+            <TableHead>Expiry</TableHead>
+            <TableHead>Date of Purchase</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {data?.map((record) => (
+            <TableRow key={record.id}>
+              <TableCell>{record.quantity}</TableCell>
+              <TableCell>{record.expiry}</TableCell>
+              <TableCell>{record.date}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </ScrollArea>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import PurchaseHistory from "@/components/PurchaseHistory";
 import { SalesHistory } from "@/components/SalesHistory";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import {
@@ -11,6 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
+import { useEffect, useState } from "react";
 
 export function PurchaseSalesHistory({
   itemID,
@@ -53,7 +56,7 @@ export function PurchaseSalesHistory({
                 <PurchaseHistory itemID={itemID} />
               </TabsContent>
               <TabsContent value="sales">
-                <SalesHistory />
+                <SalesHistory itemID={itemID} />
               </TabsContent>
             </Tabs>
           </DialogDescription>
