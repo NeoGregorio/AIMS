@@ -15,8 +15,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { item } from "@/types/supabase";
 
-export function SellItem() {
+export function SellItem({ item }: { item: item }) {
   return (
     <Dialog>
       <DialogTrigger className="underline text-red-600">
@@ -24,7 +25,7 @@ export function SellItem() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[300px]">
         <DialogHeader>
-          <DialogTitle>Sell itemName</DialogTitle>
+          <DialogTitle>Sell {item?.name}</DialogTitle>
           <DialogDescription>
             Sold this item to your customers? Log how many you sold!
           </DialogDescription>

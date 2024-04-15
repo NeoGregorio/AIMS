@@ -68,7 +68,7 @@ export default function ItemsTable({ data }: { data: item[] }) {
                 <AddStock item={item} handleAddStock={handleAddStock} />
               </TableCell>
               <TableCell>
-                <SellItem />
+                <SellItem item={item} />
               </TableCell>
               <TableCell>
                 <MoreActions
