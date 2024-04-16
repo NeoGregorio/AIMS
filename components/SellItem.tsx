@@ -21,6 +21,31 @@ type SellItemProps = {
   item: item;
 };
 
+async function CreateSalesRecord(item_id: number, qtyToSell: number) {
+  const supabase = createClient();
+  // Get current user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  try {
+    const { data, error } = await supabase.from("salesrecord").insert([
+      {
+        item_id,
+        quantity: qtyToSell,
+        date: new Date().toISOString(),
+        user_id: user?.id,
+      },
+    ]);
+  } catch (error: any) {
+    if (error.message.includes("NetworkError")) {
+      alert("Database Connection Not Found");
+    } else {
+      alert(error.message);
+    }
+  }
+}
+
 async function handleSellItem(item: item, qtyToSell: number) {
   const supabase = createClient();
   // const earliestExpiry =
@@ -46,7 +71,7 @@ export function SellItem({ item }: SellItemProps) {
 
   function handleClick() {
     const _qtyToSell = parseInt(qtyToSell); // Convert to number
-
+    CreateSalesRecord(item.id, _qtyToSell);
     handleSellItem(item, _qtyToSell).then(() =>
       window.location.replace("/inventory?message=Stock sold successfully")
     );
