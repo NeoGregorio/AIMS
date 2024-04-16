@@ -52,7 +52,7 @@ async function handleSellItem(item: item, qtyToSell: number) {
   //   (item.expiry ?? expiryDate) < expiryDate! ? item.expiry : expiryDate;
 
   try {
-    const { error } = await supabase
+    const { error: error_item_table } = await supabase
       .from("items")
       .update({
         quantity: item.quantity - qtyToSell,
@@ -60,7 +60,31 @@ async function handleSellItem(item: item, qtyToSell: number) {
       })
       .eq("id", item.id);
 
-    if (error) throw error;
+    const { data: purchaseRecords, error: error_fetch_purchase } =
+      await supabase
+        .from("purchaserecord")
+        .select("current_quantity, id, expiry")
+        .eq("item_id", item.id)
+        .neq("current_quantity", 0)
+        .order("expiry", { ascending: true })
+        .limit(1);
+
+    if (!purchaseRecords || purchaseRecords.length === 0) {
+      console.error("No purchase records found for item:", item.id);
+      alert("Out of stock!");
+      return;
+    }
+
+    const { error: error_purchase_table } = await supabase
+      .from("purchaserecord")
+      .update({
+        current_quantity: purchaseRecords[0].current_quantity - qtyToSell,
+      })
+      .eq("id", purchaseRecords[0].id);
+
+    if (error_item_table) throw error_item_table;
+    if (error_fetch_purchase) throw error_fetch_purchase;
+    if (error_purchase_table) throw error_purchase_table;
   } catch (error) {
     console.error("Error updating stock:", error);
   }
