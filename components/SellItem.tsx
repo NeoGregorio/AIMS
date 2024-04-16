@@ -12,7 +12,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { item } from "@/types/supabase";
@@ -21,9 +20,9 @@ type SellItemProps = {
   item: item;
 };
 
-async function CreateSalesRecord(item_id: number, qtyToSell: number) {
+async function createSalesRecord(item_id: number, qtyToSell: number) {
   const supabase = createClient();
-  // Get current user
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -48,8 +47,6 @@ async function CreateSalesRecord(item_id: number, qtyToSell: number) {
 
 async function handleSellItem(item: item, qtyToSell: number) {
   const supabase = createClient();
-  // const earliestExpiry =
-  //   (item.expiry ?? expiryDate) < expiryDate! ? item.expiry : expiryDate;
 
   try {
     const { error: error_item_table } = await supabase
@@ -69,7 +66,6 @@ async function handleSellItem(item: item, qtyToSell: number) {
         .order("expiry", { ascending: true });
 
     if (!purchaseRecords || purchaseRecords.length === 0) {
-      console.error("Out of stock: ", item.id);
       alert("Out of stock!");
       return;
     }
@@ -134,7 +130,7 @@ export function SellItem({ item }: SellItemProps) {
       return;
     }
 
-    CreateSalesRecord(item.id, _qtyToSell);
+    createSalesRecord(item.id, _qtyToSell);
     handleSellItem(item, _qtyToSell).then(() =>
       window.location.replace("/inventory?message=Stock sold successfully")
     );

@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar";
 import { InventoryHolder } from "@/components/inventoryHolder";
 import { redirect } from "next/navigation";
 import { item } from "@/types/supabase";
-// Main
+
 export default async function Main({
   searchParams,
 }: {

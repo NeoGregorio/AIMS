@@ -15,7 +15,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { redirect } from "next/navigation";
 
 export function AddItem() {
   const [name, setName] = useState("");
@@ -25,7 +24,7 @@ export function AddItem() {
   const handleAdd = async (event: any) => {
     event.preventDefault();
     const supabase = createClient();
-    // Get current user
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -46,8 +45,8 @@ export function AddItem() {
           error.message.includes("check constraint")
         ) {
           alert("Please fill up every field with valid inputs");
-        }else if(error.message.includes("NetworkError")){
-          alert("Database Connection Not Found")
+        } else if (error.message.includes("NetworkError")) {
+          alert("Database Connection Not Found");
         } else {
           throw error;
         }

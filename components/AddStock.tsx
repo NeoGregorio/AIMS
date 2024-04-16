@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { item } from "@/types/supabase";
@@ -150,14 +151,14 @@ export default function AddStock({ item }: AddStockProps) {
           </div>
         </form>
         <DialogFooter>
-          <button
+          <Button
             type="submit"
             className="btn-generic text-sm"
             onClick={handleClick}
             id={`${item.name}restockconfirm`}
           >
             Save
-          </button>
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
