@@ -43,9 +43,9 @@ export default function PurchaseHistory({ itemID }: { itemID: number }) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Expiry</TableHead>
-            <TableHead>Date of Purchase</TableHead>
+            <TableHead className="w-2/12">Quantity</TableHead>
+            <TableHead className="w-5/12">Expiry</TableHead>
+            <TableHead className="w-5/12">Date of Purchase</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

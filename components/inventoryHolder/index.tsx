@@ -24,7 +24,7 @@ export function InventoryHolder({ data }: { data: item[] }) {
     getItems();
   }, [search]);
   return (
-    <div>
+    <div className="w-[890px]">
       <div className="flex flex-row gap-10">
         <div className="w-[450px] flex-grow">
           <SearchBar search={search} setSearch={setSearch} />
@@ -63,7 +63,7 @@ export function InventoryHolder({ data }: { data: item[] }) {
         </div>
         <AddItem />
       </div>
-      <div className="flex items-center justify-center mt-10">
+      <div className="flex w-full mt-6">
         <ItemsTable data={items} />
       </div>
     </div>

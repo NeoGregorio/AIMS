@@ -2,7 +2,9 @@
 
 import MoreActions from "@/components/MoreActions";
 import AddStock from "@/components/AddStock";
-import { createClient } from "@/utils/supabase/client";
+import { SellItem } from "@/components/SellItem";
+import { item } from "@/types/supabase";
+
 import {
   Table,
   TableCell,
@@ -11,43 +13,45 @@ import {
   TableHeader,
   TableBody,
 } from "@/components/ui/table";
-import { SellItem } from "@/components/SellItem";
-import { item } from "@/types/supabase";
 
 export default function ItemsTable({ data }: { data: item[] }) {
   const currency = "₱";
+
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex w-full">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Category</TableHead>
-            <TableHead>Quantity</TableHead>
-            <TableHead>Sales</TableHead>
-            <TableHead>Earliest Expiry Date</TableHead>
-            <TableHead>Price</TableHead>
+            <TableHead className="w-2/12">Name</TableHead>
+            <TableHead className="w-2/12">Category</TableHead>
+            <TableHead className="w-1/12">Quantity</TableHead>
+            <TableHead className="w-1/12">Sales</TableHead>
+            <TableHead className="w-2/12">Earliest Expiry</TableHead>
+            <TableHead className="w-1/12">Price</TableHead>
+            <TableHead className="w-1/12"></TableHead>
+            <TableHead className="w-1/12"></TableHead>
+            <TableHead className="w-1/12"></TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody className="bg-white">
+        <TableBody className="w-full bg-white">
           {data?.map((item) => (
             <TableRow>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.category}</TableCell>
-              <TableCell>{item.quantity}</TableCell>
-              <TableCell>{item.sales}</TableCell>
-              <TableCell>{item.expiry}</TableCell>
-              <TableCell>
+              <TableCell className="w-2/12">{item.name}</TableCell>
+              <TableCell className="w-2/12">{item.category}</TableCell>
+              <TableCell className="w-1/12">{item.quantity}</TableCell>
+              <TableCell className="w-1/12">{item.sales}</TableCell>
+              <TableCell className="w-2/12">{item.expiry}</TableCell>
+              <TableCell className="w-1/12">
                 {currency}
                 {item.price}
               </TableCell>
-              <TableCell>
+              <TableCell className="w-1/12">
                 <AddStock item={item} />
               </TableCell>
-              <TableCell>
+              <TableCell className="w-1/12">
                 <SellItem item={item} />
               </TableCell>
-              <TableCell>
+              <TableCell className="w-1/12">
                 <MoreActions
                   itemID={item.id}
                   itemName={item.name}
