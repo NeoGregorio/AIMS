@@ -66,25 +66,55 @@ async function handleSellItem(item: item, qtyToSell: number) {
         .select("current_quantity, id, expiry")
         .eq("item_id", item.id)
         .neq("current_quantity", 0)
-        .order("expiry", { ascending: true })
-        .limit(1);
+        .order("expiry", { ascending: true });
 
     if (!purchaseRecords || purchaseRecords.length === 0) {
-      console.error("No purchase records found for item:", item.id);
+      console.error("Out of stock: ", item.id);
       alert("Out of stock!");
       return;
     }
 
-    const { error: error_purchase_table } = await supabase
-      .from("purchaserecord")
+    for (let record of purchaseRecords) {
+      if (qtyToSell <= 0) break;
+
+      let quantityToDeduct = Math.min(record.current_quantity, qtyToSell);
+      qtyToSell -= quantityToDeduct;
+
+      const { error: error_purchase_table } = await supabase
+        .from("purchaserecord")
+        .update({
+          current_quantity: record.current_quantity - quantityToDeduct,
+        })
+        .eq("id", record.id);
+
+      if (error_purchase_table) throw error_purchase_table;
+    }
+
+    const { data: earliestExpiryRecord, error: error_fetch_earliest_expiry } =
+      await supabase
+        .from("purchaserecord")
+        .select("expiry")
+        .eq("item_id", item.id)
+        .neq("current_quantity", 0)
+        .order("expiry", { ascending: true })
+        .limit(1);
+
+    if (!earliestExpiryRecord || earliestExpiryRecord.length === 0) {
+      console.error("No purchase records found for item: ", item.id);
+      return;
+    }
+
+    const { error: error_update_expiry } = await supabase
+      .from("items")
       .update({
-        current_quantity: purchaseRecords[0].current_quantity - qtyToSell,
+        expiry: earliestExpiryRecord[0].expiry,
       })
-      .eq("id", purchaseRecords[0].id);
+      .eq("id", item.id);
 
     if (error_item_table) throw error_item_table;
     if (error_fetch_purchase) throw error_fetch_purchase;
-    if (error_purchase_table) throw error_purchase_table;
+    if (error_fetch_earliest_expiry) throw error_fetch_earliest_expiry;
+    if (error_update_expiry) throw error_update_expiry;
   } catch (error) {
     console.error("Error updating stock:", error);
   }
