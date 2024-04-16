@@ -58,7 +58,7 @@ async function CreatePurchaseRecord(
       {
         item_id,
         quantity: qtyToAdd,
-        current_quantity: currentQty + qtyToAdd,
+        current_quantity: qtyToAdd,
         expiry,
         date: new Date().toISOString(),
         user_id: user?.id,
