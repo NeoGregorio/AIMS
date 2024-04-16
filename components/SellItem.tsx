@@ -122,9 +122,18 @@ async function handleSellItem(item: item, qtyToSell: number) {
 
 export function SellItem({ item }: SellItemProps) {
   const [qtyToSell, setQtyToSell] = useState("");
+  const _qtyToSell = parseInt(qtyToSell); // Convert to number
 
   function handleClick() {
-    const _qtyToSell = parseInt(qtyToSell); // Convert to number
+    if (isNaN(_qtyToSell)) {
+      alert("Please enter a valid quantity");
+      return;
+    }
+    if (_qtyToSell <= 0) {
+      alert("Please enter a valid quantity");
+      return;
+    }
+
     CreateSalesRecord(item.id, _qtyToSell);
     handleSellItem(item, _qtyToSell).then(() =>
       window.location.replace("/inventory?message=Stock sold successfully")
