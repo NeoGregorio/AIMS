@@ -172,7 +172,7 @@ export function SellItem({ item }: SellItemProps) {
             type="submit"
             className="btn-generic text-sm"
             onClick={handleClick}
-            id={`${item.name}restockconfirm`}
+            id={`sellstockbtn`}
           >
             Save
           </button>
