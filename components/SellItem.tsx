@@ -93,17 +93,16 @@ async function handleSellItem(item: item, qtyToSell: number) {
         .eq("item_id", item.id)
         .neq("current_quantity", 0)
         .order("expiry", { ascending: true })
-        .limit(1);
+        .limit(1)
+        .single();
 
-    if (!earliestExpiryRecord || earliestExpiryRecord.length === 0) {
-      console.error("No purchase records found for item: ", item.id);
-      return;
-    }
+    const newEarliestExpiry = earliestExpiryRecord?.expiry ?? null;
+    console.log(newEarliestExpiry);
 
     const { error: error_update_expiry } = await supabase
       .from("items")
       .update({
-        expiry: earliestExpiryRecord[0].expiry,
+        expiry: newEarliestExpiry,
       })
       .eq("id", item.id);
 
@@ -130,9 +129,14 @@ export function SellItem({ item }: SellItemProps) {
       return;
     }
 
+    if (_qtyToSell > item.quantity) {
+      alert("Not enough stock to sell");
+      return;
+    }
+
     createSalesRecord(item.id, _qtyToSell);
     handleSellItem(item, _qtyToSell).then(() =>
-      window.location.replace("/inventory?message=Stock sold successfully")
+      window.location.replace("/inventory?message=Stock sold successfully"),
     );
   }
   return (

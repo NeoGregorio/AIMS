@@ -40,7 +40,7 @@ export default function ItemsTable({ data }: { data: item[] }) {
               <TableCell className="w-2/12">{item.category}</TableCell>
               <TableCell className="w-1/12">{item.quantity}</TableCell>
               <TableCell className="w-1/12">{item.sales}</TableCell>
-              <TableCell className="w-2/12">{item.expiry}</TableCell>
+              <TableCell className="w-2/12">{item.expiry ?? "N/A"}</TableCell>
               <TableCell className="w-1/12">
                 {currency}
                 {item.price}

@@ -13,8 +13,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { useEffect, useState } from "react";
-
 export function PurchaseSalesHistory({
   itemID,
   itemName,
