@@ -122,22 +122,16 @@ export function SellItem({ item }: SellItemProps) {
   function handleClick() {
     if (isNaN(_qtyToSell)) {
       alert("Please enter a valid quantity");
-      return;
-    }
-    if (_qtyToSell <= 0) {
+    } else if (_qtyToSell <= 0) {
       alert("Please enter a valid quantity");
-      return;
-    }
-
-    if (_qtyToSell > item.quantity) {
+    } else if (_qtyToSell > item.quantity) {
       alert("Not enough stock to sell");
-      return;
+    } else {
+      createSalesRecord(item.id, _qtyToSell);
+      handleSellItem(item, _qtyToSell).then(() =>
+        window.location.replace("/inventory?message=Stock sold successfully"),
+      );
     }
-
-    createSalesRecord(item.id, _qtyToSell);
-    handleSellItem(item, _qtyToSell).then(() =>
-      window.location.replace("/inventory?message=Stock sold successfully"),
-    );
   }
   return (
     <Dialog>
@@ -172,7 +166,7 @@ export function SellItem({ item }: SellItemProps) {
             type="submit"
             className="btn-generic text-sm"
             onClick={handleClick}
-            id={`sellstockbtn`}
+            id="sellstockbtn"
           >
             Save
           </button>

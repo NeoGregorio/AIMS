@@ -3,7 +3,7 @@ import { FunctionsError } from "@supabase/supabase-js";
 //  {deleteUser}from '../AIMS/app/auth/callback/route.ts';
 
 const space = "%20"; // URL encoding for space (ASCII 0x20 = 32)
-/*
+
 function getRandomLetter(): string {
   const alphabet = "cdefghijklmnopqrstuvwxyz";
   const randomIndex = Math.floor(Math.random() * alphabet.length);
@@ -293,6 +293,7 @@ test("10. Delete Item", async ({ page }) => {
 });
 
 test("11. Add stock to Item", async ({ page }) => {
+  test.setTimeout(50000);
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
@@ -307,9 +308,10 @@ test("11. Add stock to Item", async ({ page }) => {
   expect(currentUrl).toBe(
     `https://aims-omega.vercel.app/inventory?message=Stock%20added%20successfully`,
   );
-  });
+});
 
 test("12. Properly deduct stock of an item.", async ({ page }) => {
+  test.setTimeout(50000);
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
   await page.fill('input[name="password"]', "abcdef");
@@ -318,8 +320,8 @@ test("12. Properly deduct stock of an item.", async ({ page }) => {
   await page.goto("https://aims-omega.vercel.app/inventory");
   await page.locator("text=Sell").nth(0).click();
   await page.fill('input[name="quantity"]', "10", { force: true });
-  await page.click("button#sellstockbtn", { force: true });
-  await page.waitForNavigation();
+  await page.click("button[type=submit]");
+  await page.waitForTimeout(10000);
   const currentUrl = page.url();
   expect(currentUrl).toBe(
     `https://aims-omega.vercel.app/inventory?message=Stock%20sold%20successfully`,
@@ -332,6 +334,7 @@ test("13a. Should not allow deducting stock that uses a non-positive or empty va
   const errors: any[] = [];
   page.on("dialog", (alert) => {
     errors.push(alert.message());
+    alert.accept();
   });
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
@@ -345,12 +348,15 @@ test("13a. Should not allow deducting stock that uses a non-positive or empty va
   await page.waitForTimeout(5000);
   expect(errors).toStrictEqual(["Please enter a valid quantity"]);
 });
+
 test("13b. Should not allow deducting stock that uses a non-positive or empty value (i.e., x <=0 not allowed).", async ({
   page,
 }) => {
+  test.setTimeout(50000);
   const errors: any[] = [];
   page.on("dialog", (alert) => {
     errors.push(alert.message());
+    alert.accept();
   });
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
@@ -367,9 +373,11 @@ test("13b. Should not allow deducting stock that uses a non-positive or empty va
 test("14.Should not allow deducting stocks when item’s quantity is 0.", async ({
   page,
 }) => {
+  test.setTimeout(50000);
   const errors: any[] = [];
   page.on("dialog", (alert) => {
     errors.push(alert.message());
+    alert.accept();
   });
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
@@ -387,9 +395,11 @@ test("14.Should not allow deducting stocks when item’s quantity is 0.", async 
 test("15.Should not allow deducting stock when quantity is lower than sale quantity.", async ({
   page,
 }) => {
+  test.setTimeout(50000);
   const errors: any[] = [];
   page.on("dialog", (alert) => {
     errors.push(alert.message());
+    alert.accept();
   });
   await page.goto("https://aims-omega.vercel.app/login");
   await page.fill('input[name="email"]', "abc@gmail.com");
@@ -403,4 +413,3 @@ test("15.Should not allow deducting stock when quantity is lower than sale quant
   await page.waitForTimeout(5000);
   expect(errors).toStrictEqual(["Not enough stock to sell"]);
 });
-*/
