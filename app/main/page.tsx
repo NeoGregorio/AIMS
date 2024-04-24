@@ -4,6 +4,7 @@ import NavBar from "@/components/NavBar";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { PieChart } from "@/components/PieChart";
 
 export default async function Main({
   searchParams,
@@ -15,6 +16,9 @@ export default async function Main({
     data: { user },
   } = await supabase.auth.getUser();
 
+  let { data: SalesData, error } = await supabase.rpc("sales_sum");
+  if (error) throw error;
+
   if (user) {
     return (
       <div className="flex w-full flex-1 flex-col items-center gap-20">
@@ -24,7 +28,7 @@ export default async function Main({
           hasLinks={true}
           currentActive={"home"}
         />
-        <p>Dashboard page under construction.</p>
+        <PieChart data={SalesData} />
       </div>
     );
   } else {
