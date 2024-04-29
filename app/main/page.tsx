@@ -4,8 +4,10 @@ import NavBar from "@/components/NavBar";
 import Link from "next/link";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { PieChart } from "@/components/PieChart";
 import { Separator } from "@/components/ui/separator";
+import NearExpiryTable from "@/components/DashboardNearExpiry";
+import LowStockTable from "@/components/DashboardLowStock";
+import SalesChart from "@/components/DashboardSalesChart";
 
 export default async function Main({
   searchParams,
@@ -39,18 +41,18 @@ export default async function Main({
           currentActive={"home"}
         />
 
-        <div className="flex items-center gap-4 justify-center w-full">
+        <div className="flex items-center gap-4 justify-center w-full mt-[-40px]">
           <span className="text-2xl">Hello, {user.email?.split("@")[0]}!</span>
           <Separator
             style={{
               height: "0.5px",
-              width: "420px",
+              width: "500px",
               backgroundColor: "#5F5F5F",
             }}
           />
           <span
             style={{ color: "#5F5F5F" }}
-            className="flex items-center text-xs gap-2"
+            className="flex items-center text-xs gap-1"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +70,12 @@ export default async function Main({
           </span>
         </div>
 
-        <PieChart data={SalesData} />
+        <div className="flex items-start gap-5 justify-center w-full mt-[-50px]">
+          <NearExpiryTable />
+          <LowStockTable />
+          <SalesChart data={SalesData} />
+          {/* Nilipat ko yung Pie Chart sa DashboardSalesChart.tsx*/}
+        </div>
       </div>
     );
   } else {

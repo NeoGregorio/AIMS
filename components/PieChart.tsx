@@ -20,7 +20,7 @@ ChartJS.register(
   Title,
   ArcElement,
   Tooltip,
-  Legend,
+  Legend
 );
 
 export function PieChart({ data }: { data: any[] }) {
@@ -34,11 +34,12 @@ export function PieChart({ data }: { data: any[] }) {
               label: "Sales",
               data: data.map((d) => d.totalsales),
               backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
+                "#f1cbff",
+                "#ffbdbd",
+                "#68c4af",
+                "#96ead7",
+                "#bae1ff",
+                "#c9c9ff",
               ],
               borderWidth: 1,
             },
@@ -48,11 +49,11 @@ export function PieChart({ data }: { data: any[] }) {
           plugins: {
             title: {
               display: true,
-              text: "Sales by Category",
+              text: "Your Store's Sales Chart",
             },
             legend: {
               display: true,
-              position: "right",
+              position: "bottom",
             },
           },
         }}
