@@ -9,12 +9,17 @@ import {
 } from "@/components/ui/card";
 import { PieChart } from "@/components/PieChart";
 import { Separator } from "@/components/ui/separator";
-
-export default function SalesChart({ data }: { data: item[] }) {
-  const sampleItems = ["Red Horse", "San Miguel Apple", "Jack Daniels"];
-  const sampleCats = ["Drinks", "Food", "Alcoholic Drinks"];
+import { createClient } from "@/utils/supabase/server";
+export default async function SalesChart({ data }: { data: any[] }) {
+  const categories = data.map((item) => item.cat).slice(0, 3);
+  const supabase = createClient();
+  const { data: topsales, error } = await supabase
+    .from("items")
+    .select("name")
+    .order("sales", { ascending: false })
+    .limit(3);
   return (
-    <Card className="shadow-lg w-1/3" style={{ borderColor: "#5F5F5F" }}>
+    <Card className="shadow-lg w-1/4">
       <CardHeader>
         <CardTitle className="flex items-center gap-1 font-normal ">
           <svg
@@ -51,9 +56,9 @@ export default function SalesChart({ data }: { data: item[] }) {
             </p>
 
             <ol>
-              {sampleItems.map((item, index) => (
+              {topsales?.map((item, index) => (
                 <li key={index}>
-                  {index + 1}. {item}
+                  {index + 1}. {item.name}
                 </li>
               ))}
             </ol>
@@ -65,7 +70,7 @@ export default function SalesChart({ data }: { data: item[] }) {
             </p>
 
             <ol>
-              {sampleCats.map((item, index) => (
+              {categories.map((item, index) => (
                 <li key={index}>
                   {index + 1}. {item}
                 </li>

@@ -20,12 +20,12 @@ ChartJS.register(
   Title,
   ArcElement,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export function PieChart({ data }: { data: any[] }) {
   return (
-    <div className="container relative m-auto h-[50vh] w-[50vw]">
+    <div className="container relative m-auto w-auto">
       <Pie
         data={{
           labels: data.map((d) => d.cat),

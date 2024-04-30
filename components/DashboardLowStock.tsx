@@ -15,10 +15,18 @@ import {
   TableHeader,
   TableBody,
 } from "@/components/ui/table";
+import { createClient } from "@/utils/supabase/server";
+export default async function LowStockTable() {
+  const supabase = createClient();
 
-export default function LowStockTable() {
-  // { data }: { data: item[] })
-  const sampleItems = ["Red Horse", "San Miguel Apple", "Jack Daniels"];
+  const { data, error } = await supabase
+    .from("items")
+    .select("*")
+    .lte("quantity", 10)
+    .order("quantity", { ascending: true });
+  if (error) {
+    throw error;
+  }
 
   return (
     <Card className="shadow-lg w-2.5/12" style={{ borderColor: "#5F5F5F" }}>
@@ -53,10 +61,12 @@ export default function LowStockTable() {
           </TableHeader>
 
           <TableBody className="w-full bg-white" style={{ color: "#5F5F5F" }}>
-            {sampleItems.map((item) => (
-              <TableRow>
-                <TableCell className="w-1/3 text-black">{item}</TableCell>
-                <TableCell className="w-1/3 text-black">3</TableCell>
+            {data?.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className="w-1/3 text-black">{item.name}</TableCell>
+                <TableCell className="w-1/3 text-black">
+                  {item.quantity}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

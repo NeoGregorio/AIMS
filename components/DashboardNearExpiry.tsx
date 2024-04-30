@@ -15,10 +15,40 @@ import {
   TableHeader,
   TableBody,
 } from "@/components/ui/table";
+import { createClient } from "@/utils/supabase/server";
 
-export default function NearExpiryTable() {
-  // { data }: { data: item[] })
-  const sampleItems = ["Red Horse", "San Miguel Apple", "Jack Daniels"];
+function getNumberOfDaysUntilExpiry(expiry: string) {
+  const expiryDate = new Date(expiry);
+  const today = new Date();
+  const timeDifference = expiryDate.getTime() - today.getTime();
+  const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+  if (daysDifference < 0) {
+    return "Expired!";
+  } else if (daysDifference == 0) {
+    return "Today!";
+  } else if (daysDifference == 1) {
+    return "Tomorrow!";
+  } else {
+    return `In ${daysDifference} days`;
+  }
+}
+
+export default async function NearExpiryTable() {
+  const supabase = createClient();
+
+  //get all items that are expiring 1 month from now
+  const monthFromNow = new Date();
+  monthFromNow.setMonth(monthFromNow.getMonth() + 1);
+  const monthFromNowString = monthFromNow.toISOString();
+  const { data, error } = await supabase
+    .from("items")
+    .select("*")
+    .lte("expiry", monthFromNowString)
+    .order("expiry", { ascending: true });
+  if (error) {
+    throw error;
+  }
 
   return (
     <Card className="shadow-lg w-1/4.5" style={{ borderColor: "#5F5F5F" }}>
@@ -53,12 +83,14 @@ export default function NearExpiryTable() {
           </TableHeader>
 
           <TableBody className="w-full bg-white" style={{ color: "#5F5F5F" }}>
-            {sampleItems.map((item) => (
-              <TableRow>
-                <TableCell className="w-1/3 text-black">{item}</TableCell>
+            {data?.map((item) => (
+              <TableRow key="item.id">
+                <TableCell className="w-1/3 text-black">{item.name}</TableCell>
                 <TableCell className="w-1/3 text-black">
-                  2025-05-1 <br />
-                  <span className="text-red-500">Tomorrow!</span>
+                  {item.expiry} <br />
+                  <span className="text-red-500">
+                    {getNumberOfDaysUntilExpiry(item.expiry)}
+                  </span>
                 </TableCell>
               </TableRow>
             ))}
