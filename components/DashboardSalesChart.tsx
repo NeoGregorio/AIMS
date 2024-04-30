@@ -9,20 +9,12 @@ import {
 } from "@/components/ui/card";
 import { PieChart } from "@/components/PieChart";
 import { Separator } from "@/components/ui/separator";
-import {
-  Table,
-  TableCell,
-  TableRow,
-  TableHead,
-  TableHeader,
-  TableBody,
-} from "@/components/ui/table";
 
 export default function SalesChart({ data }: { data: item[] }) {
   const sampleItems = ["Red Horse", "San Miguel Apple", "Jack Daniels"];
   const sampleCats = ["Drinks", "Food", "Alcoholic Drinks"];
   return (
-    <Card className="shadow-lg w-1/4" style={{ borderColor: "#5F5F5F" }}>
+    <Card className="shadow-lg w-1/3" style={{ borderColor: "#5F5F5F" }}>
       <CardHeader>
         <CardTitle className="flex items-center gap-1 font-normal ">
           <svg
