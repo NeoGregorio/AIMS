@@ -22,8 +22,8 @@ export default async function Main({
   //   minute: "2-digit",
   // });
   const now = new Date();
-  const date = now.toISOString().slice(0, 10);
   now.setHours(now.getHours() + 8);
+  const date = now.toISOString().slice(0, 10);
   const time = now.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
