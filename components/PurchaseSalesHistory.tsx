@@ -16,14 +16,18 @@ import {
 export function PurchaseSalesHistory({
   itemID,
   itemName,
+  dashboard,
 }: {
   itemID: number;
   itemName: string;
+  dashboard: boolean;
 }) {
   return (
     <Dialog>
       <DialogTrigger onClick={(event) => event.stopPropagation()}>
-        <span>Purchase & Sales History</span>
+        {!dashboard && <span>Purchase & Sales History</span>}
+
+        {dashboard && <span>{itemName}</span>}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>

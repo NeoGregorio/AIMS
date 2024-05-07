@@ -10,12 +10,14 @@ import {
 import { PieChart } from "@/components/PieChart";
 import { Separator } from "@/components/ui/separator";
 import { createClient } from "@/utils/supabase/server";
+import { PurchaseSalesHistory } from "./PurchaseSalesHistory";
+
 export default async function SalesChart({ data }: { data: any[] }) {
   const categories = data.map((item) => item.cat).slice(0, 3);
   const supabase = createClient();
   const { data: topsales, error } = await supabase
     .from("items")
-    .select("name")
+    .select("id,name")
     .order("sales", { ascending: false })
     .limit(3);
   return (
@@ -58,7 +60,12 @@ export default async function SalesChart({ data }: { data: any[] }) {
             <ol>
               {topsales?.map((item, index) => (
                 <li key={index}>
-                  {index + 1}. {item.name}
+                  {index + 1}.{" "}
+                  <PurchaseSalesHistory
+                    itemID={item.id}
+                    itemName={item.name}
+                    dashboard={true}
+                  />
                 </li>
               ))}
             </ol>

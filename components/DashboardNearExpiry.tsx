@@ -16,6 +16,7 @@ import {
   TableBody,
 } from "@/components/ui/table";
 import { createClient } from "@/utils/supabase/server";
+import { PurchaseSalesHistory } from "./PurchaseSalesHistory";
 
 function getNumberOfDaysUntilExpiry(expiry: string) {
   const expiryDate = new Date(expiry);
@@ -85,7 +86,13 @@ export default async function NearExpiryTable() {
           <TableBody className="w-full bg-white" style={{ color: "#5F5F5F" }}>
             {data?.map((item) => (
               <TableRow key="item.id">
-                <TableCell className="w-1/3 text-black">{item.name}</TableCell>
+                <TableCell className="w-1/3 text-black">
+                  <PurchaseSalesHistory
+                    itemID={item.id}
+                    itemName={item.name}
+                    dashboard={true}
+                  />
+                </TableCell>
                 <TableCell className="w-1/3 text-black">
                   {item.expiry} <br />
                   <span className="text-red-500">
