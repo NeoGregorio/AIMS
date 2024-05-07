@@ -45,7 +45,7 @@ export function InventoryHolder({ data }: { data: item[] }) {
             </svg>
             <span>Stocks</span>
           </div>
-          <div className="text-graysubtitle flex flex-row items-center gap-2">
+          {/* <div className="text-graysubtitle flex flex-row items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -59,7 +59,7 @@ export function InventoryHolder({ data }: { data: item[] }) {
               />
             </svg>
             <span>Category</span>
-          </div>
+          </div> */}
         </div>
         <AddItem />
       </div>
