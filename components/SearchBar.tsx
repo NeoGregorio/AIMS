@@ -22,7 +22,7 @@ export default function SearchBar({
       </svg>
       <input
         type="text"
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value.toLowerCase())}
         placeholder="Quickly find your product!"
         className="text-black-600/50 flex-grow bg-transparent text-sm outline-none"
       />
